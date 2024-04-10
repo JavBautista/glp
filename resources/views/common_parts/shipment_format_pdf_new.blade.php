@@ -21,7 +21,7 @@
         text-align: center;
         padding: 2px;
         background-color: #000;
-        background-image: url("{{asset('images/logo_print_h.png')}}"); /* Ruta de la imagen */
+        /*background-image: url("{ {asset('images/logo_print_h.png')}}"); /* Ruta de la imagen */
         background-repeat: no-repeat;
         background-size: contain; /* Ajusta la imagen al tamaño de la celda */
         background-position: center center; /* Alinea la imagen en el centro */
@@ -45,15 +45,15 @@
         </tr>
         <tr>
             <td>
-                <h3>Envíos VAPS trabaja para ti, dandole la seguridad y confianza en tus entregas.</h3>
+                <h3>GLP <em>GESTION LOGISTICA DE MENSAJERIA Y PAQUTERIA</em></h3>
             </td>
         </tr>
         <tr>
             <td>
                 <h3>
-                    Av. 2 oriente 1611 - 15 Barrio de La Luz, Puebla Centro, Mexico.
+                    CALLE 13 SUR NO. 1525, BARRIO SANTA MARIA XIXITLA SAN PEDRO CHOLULA, PUEBLA CP 72760.
                 </h3>
-                <p>Tel. (+52) 221 344 3146 E-Mail: quirozadrianqo@gmail.com</p>
+                <p>Tel. (+52) 222 608 8961</p>
             </td>
         </tr>
         <tr>
@@ -113,7 +113,7 @@
                 <td colspan="2">NOMBRE Y FIRMA DE CONFORMIDAD</td>
             </tr>
             <tr>
-                <td colspan="2">wwww.enviosvaps.com Tel. (+52) 221 344 3146 E-Mail: quirozadrianqo@gmail.com</td>
+                <td colspan="2">Tel. (+52) 222 608 8961</td>
             </tr>
         </tfoot>
     </table>

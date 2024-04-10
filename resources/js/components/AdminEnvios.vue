@@ -178,6 +178,7 @@
                 var url = '/admin/shipments/get-shipments?page='+page+'&buscar='+buscar;
                 axios.get(url).then(function (response) {
                     var respuesta  = response.data;
+                    console.log(respuesta);
                     me.arrayEnvios = respuesta.shipments.data;
                     me.pagination  = respuesta.pagination;
                     me.fecha_ini   = new Date(respuesta.fecha_ini);
