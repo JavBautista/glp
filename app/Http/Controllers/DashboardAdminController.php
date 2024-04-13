@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DashboardAdminController extends Controller
 {
@@ -41,31 +42,16 @@ class DashboardAdminController extends Controller
     public function getShipments(Request $request){
         //if(!$request->ajax()) return redirect('/');
 
-        //Si existen las variables de session con fechas string en formato Y-m-d
-        if($request->session()->has('fecha_ini')){
-            //la convertimos en Objeto Date para regresarselo completo al componente VUE
-            $fecha_ini = Carbon::parse($request->session()->get('fecha_ini'));
-        }else{
-            //La 1a vez fecha_ini obtiene el Obje Date Completo para manadarselo al VUE
-            $fecha_ini= Carbon::now();
-        };
-        if($request->session()->has('fecha_fin')){
-            //la convertimos en Objeto Date para regresarselo completo al componente VUE
-            $fecha_fin = Carbon::parse($request->session()->get('fecha_fin'));
-        }else{
-            //La 1a vez fecha_fin obtiene el Obje Date Completo para manadarselo al VUE
-            $fecha_fin= Carbon::now();
-        };
+        // Obtener fechas del request o establecer fechas predeterminadas
+        $fecha_ini = $request->session()->get('fecha_ini') ? Carbon::parse($request->session()->get('fecha_ini')) : Carbon::now();
+        $fecha_fin = $request->session()->get('fecha_fin') ? Carbon::parse($request->session()->get('fecha_fin')) : Carbon::now();
 
-        //Para el Query, la covertimos en obejto date pero con formato Y-m-d
-        $f1= $fecha_ini->format('Y-m-d');
-        $f2= $fecha_fin->format('Y-m-d');
+        // Convertir fechas a formato 'Y-m-d'
+        $f1 = $fecha_ini->format('Y-m-d');
+        $f2 = $fecha_fin->format('Y-m-d');
 
-
-        $buscar      = $request->buscar;
-        //$fecha_ini   = $request->fecha_ini;
-        //$fecha_fin   = $request->fecha_fin;
         $num_paginate=50;
+        $buscar      = $request->buscar;
         if($buscar==''){
             //$categorias = Categoria::orderBy('id','desc')->paginate(3);
             $shipments = Shipment::where('disabled',0)
@@ -73,14 +59,14 @@ class DashboardAdminController extends Controller
                         ->with('status')
                         ->with('remitent')
                         ->with('destinatary')
-                        ->whereBetween('created_at', [$f1, $f2])
+                        ->whereBetween(DB::raw('DATE(created_at)'), [$f1, $f2])
                         ->paginate($num_paginate);
         }else{
             $shipments = Shipment::where('disabled',0)
                         ->with('status')
                         ->with('remitent')
                         ->with('destinatary')
-                        ->whereBetween('created_at', [$f1, $f2])
+                        ->whereBetween(DB::raw('DATE(created_at)'), [$f1, $f2])
                         ->whereHas('destinatary', function (Builder $query) use($buscar) {
                             $query->where('name', 'like', '%'.$buscar.'%')
                             ->orWhere('company', 'like', '%'.$buscar.'%')
@@ -168,7 +154,7 @@ class DashboardAdminController extends Controller
     * LINKS ADMIN/CUSTOMERS
     */
     public function customersIndex(){
-        $customers = Customer::paginate(10);
+        $customers = Customer::orderBy('id','desc')->paginate(10);
         return view('admin.customers.index',[
             'customers'=>$customers,
         ]);
@@ -193,6 +179,13 @@ class DashboardAdminController extends Controller
     public function customerEdit($id){
         $customer = Customer::find($id);
         return view('admin.customers.edit',[
+            'customer'=>$customer,
+        ]);
+    }
+
+    public function customerResetPass($id){
+        $customer = Customer::find($id);
+        return view('admin.customers.reset_pass',[
             'customer'=>$customer,
         ]);
     }

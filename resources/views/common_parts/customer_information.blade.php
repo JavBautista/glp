@@ -1,6 +1,9 @@
 <div class="card">
+	<div class="card-header">
+		Datos del Cliente
+	</div>
 	<div class="card-body">
-		<div class="jumbotron">
+
 			<div class="row">
 				<div class="col-6">
 					<dl class="row">
@@ -46,6 +49,6 @@
 
 				</div>
 			</div>
-		</div>
+
 	</div>
 </div>

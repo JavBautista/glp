@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Shipment;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentsExport implements FromView
 {
@@ -21,7 +22,7 @@ class ShipmentsExport implements FromView
         $f2=$this->fecha_fin;
         $shipments = Shipment::with('history')
                             ->with('packages')
-                            ->whereBetween('created_at', [$f1,$f2])
+                            ->whereBetween(DB::raw('DATE(created_at)'), [$f1, $f2])
                             ->get();
 
         $num_max_packages=0;

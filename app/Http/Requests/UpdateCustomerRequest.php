@@ -24,14 +24,12 @@ class UpdateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'mail'=>'required|max:100|email',
             'name'=>'required',
             'rfc'=>'required',
             'phone'=>'required|max:15',
             'movil'=>'required|max:15',
             'address'=>'required',
             'number_out'=>'required',
-            'number_int'=>'required',
             'zip_code'=>'required',
             'district'=>'required',
             'city'=>'required',
@@ -43,10 +41,6 @@ class UpdateCustomerRequest extends FormRequest
 
     public function messages(){
         return [
-            'mail.required'=>'Este campo es obligatorio.',
-            'mail.max'=>'Este campo no puede tener mas de 100 caracteres.',
-            'mail.email'=>'El email no tiene un formato correcto.',
-
             'name.required'=>'Este campo es obligatorio.',
             'rfc.required'=>'Este campo es obligatorio.',
             
@@ -58,7 +52,6 @@ class UpdateCustomerRequest extends FormRequest
             
             'address.required'=>'Este campo es obligatorio.',
             'number_out.required'=>'Este campo es obligatorio.',
-            'number_int.required'=>'Este campo es obligatorio.',
 
             'zip_code.required'=>'Este campo es obligatorio.',
             //'zip_code.max'=>'Este campo no puede tener mas de 5 caracteres.',

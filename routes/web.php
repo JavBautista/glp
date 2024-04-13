@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/collectors/get', 'CollectorsController@list');
         Route::post('/admin/collectors/store', 'CollectorsController@store');
         Route::put('/admin/collectors/update', 'CollectorsController@update');
+        Route::put('/admin/collectors/update-baja', 'CollectorsController@updatBaja');
         Route::put('/admin/collectors/update/active', 'CollectorsController@updateActive');
         Route::put('/admin/collectors/update/inactive', 'CollectorsController@updateInactive');
 
@@ -80,12 +81,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/customers', 'DashboardAdminController@customersIndex');
         Route::get('/admin/customers/create', 'DashboardAdminController@customerCreate');
         Route::get('/admin/customers/edit/{id}', 'DashboardAdminController@customerEdit')->name('customer.edit');
+
+        Route::get('/admin/customers/reset-pass/{id}', 'DashboardAdminController@customerResetPass')->name('customer.reset-pass');
+
         Route::get('/admin/customers/edit/status/{id}', 'DashboardAdminController@customerEditStatus')->name('customer.edit.status');
         Route::get('/admin/customers/delete/{id}', 'DashboardAdminController@customerDelete')->name('customer.delete');
         Route::get('/admin/customers/detail/{id}', 'DashboardAdminController@customerDetail')->name('customer.detail');
 
         Route::post('/admin/customers/store', 'CustomersController@store');
         Route::post('/admin/customers/update', 'CustomersController@update');
+        Route::post('/admin/customers/update-pass', 'CustomersController@resetPass');
         Route::post('/admin/customers/update-status', 'CustomersController@updateStatus');
         Route::post('/admin/customers/destroy', 'CustomersController@destroy');
 

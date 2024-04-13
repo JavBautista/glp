@@ -1729,6 +1729,8 @@ __webpack_require__.r(__webpack_exports__);
       reference: '',
       detail: '',
       observations: '',
+      password: '',
+      password_confirmation: '',
       error_server: 0,
       errors_server_msg: [],
       modal: 0,
@@ -1941,6 +1943,24 @@ __webpack_require__.r(__webpack_exports__);
         me.errors_server_msg = error.response.data.errors;
       });
     },
+    actualizarPasswordCollector: function actualizarPasswordCollector() {
+      if (this.validarPasswordCollector()) {
+        return;
+      }
+      var me = this;
+      console.log('Vaqmos a Guardar: ' + me.password);
+      axios.put('/admin/collectors/update-password', {
+        'collector_id': me.collector_id,
+        'password': me.password
+      }).then(function (response) {
+        console.log(response);
+        me.cerrarModal();
+        me.loadCollectors(me.pagination.current_page, me.buscar, me.criterio);
+      })["catch"](function (error) {
+        me.error_server = 1;
+        me.errors_server_msg = error.response.data.errors;
+      });
+    },
     validarDatosCollector: function validarDatosCollector(accion) {
       this.errorCollector = 0;
       this.errorMostrarMsjCollector = [];
@@ -1959,6 +1979,27 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.state) this.errorMostrarMsjCollector.push('El estado no puede estar vacio');
       if (!this.reference) this.errorMostrarMsjCollector.push('La referencia no puede estar vacio');
       if (!this.detail) this.errorMostrarMsjCollector.push('El detalle no puede estar vacio');
+      if (this.errorMostrarMsjCollector.length) this.errorCollector = 1;
+      return this.errorCollector;
+    },
+    validarPasswordCollector: function validarPasswordCollector() {
+      this.errorCollector = 0;
+      this.errorMostrarMsjCollector = [];
+
+      // Validar que el campo de contraseña no esté vacío
+      if (!this.password) {
+        this.errorMostrarMsjCollector.push('El campo contraseña no puede estar vacío');
+      }
+
+      // Validar que la longitud de la contraseña sea al menos 8 caracteres
+      if (this.password && this.password.length < 8) {
+        this.errorMostrarMsjCollector.push('La contraseña debe tener al menos 8 caracteres');
+      }
+
+      // Validar que el campo de confirmación de contraseña coincida
+      if (this.password !== this.password_confirmation) {
+        this.errorMostrarMsjCollector.push('La confirmación de la contraseña no coincide');
+      }
       if (this.errorMostrarMsjCollector.length) this.errorCollector = 1;
       return this.errorCollector;
     },
@@ -2037,6 +2078,17 @@ __webpack_require__.r(__webpack_exports__);
                   this.reference = data['reference'];
                   this.detail = data['detail'];
                   this.observations = data['observations'];
+                  break;
+                }
+              case 'actualizar_password':
+                {
+                  this.limpiarDatos();
+                  this.modal = 1;
+                  this.tipoAccion = 4;
+                  this.tituloModal = 'Actualizar password para ' + data['name'];
+                  this.collector_id = data['id'];
+                  this.password = '';
+                  this.password_confirmation = '';
                   break;
                 }
             }
@@ -2132,11 +2184,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url).then(function (response) {})["catch"](function (error) {})["finally"](function () {});
     },
     listarEnvios: function listarEnvios(page, buscar) {
+      console.log('listarEnvios');
       var me = this;
       var url = '/admin/shipments/get-shipments?page=' + page + '&buscar=' + buscar;
       axios.get(url).then(function (response) {
+        console.log(response);
         var respuesta = response.data;
-        console.log(respuesta);
         me.arrayEnvios = respuesta.shipments.data;
         me.pagination = respuesta.pagination;
         me.fecha_ini = new Date(respuesta.fecha_ini);
@@ -2206,7 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
       this.errorStatus = 0;
       this.errorMostrarMsjStatus = [];
       if (!this.status) this.errorMostrarMsjStatus.push("El nombre del estatus no puede estar vacío.");
-      if (!this.description) this.errorMostrarMsjStatus.push("La description del estatus no puede estar vacío.");
+      //if (!this.description) this.errorMostrarMsjStatus.push("La description del estatus no puede estar vacío.");
       if (this.errorMostrarMsjStatus.length) this.errorStatus = 1;
       return this.errorStatus;
     },
@@ -2216,8 +2269,8 @@ __webpack_require__.r(__webpack_exports__);
       }
       var me = this;
       axios.post('/admmin/shipments_status/store', {
-        'status': this.status,
-        'description': this.description
+        'status': this.status
+        //'description': this.description
       }).then(function (response) {
         me.cerrarModal();
         me.listarStatuses();
@@ -2232,8 +2285,8 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       axios.put('/admmin/shipments_status/update', {
         'id': this.status_id,
-        'status': this.status,
-        'description': this.description
+        'status': this.status
+        //'description': this.description
       }).then(function (response) {
         me.cerrarModal();
         me.listarStatuses();
@@ -3515,7 +3568,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     listarEnvios: function listarEnvios(page, buscar) {
-      console.log(buscar);
+      console.log('Listar Envios');
       var me = this;
       var url = '/customer/get-customers?page=' + page + '&buscar=' + buscar;
       axios.get(url).then(function (response) {
@@ -3649,9 +3702,9 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa fa-search"
-  }), _vm._v(" Buscar")])])])]), _vm._v(" "), _c("table", {
+  }), _vm._v(" Buscar")])])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("table", {
     staticClass: "table table-bordered table-striped table-sm"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.arrayCollectors, function (collector) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.arrayCollectors, function (collector) {
     return _c("tr", {
       key: collector.id
     }, [_c("td", {
@@ -3668,7 +3721,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _c("td", {
       domProps: {
-        textContent: _vm._s(collector.addres)
+        textContent: _vm._s(collector.address)
       }
     }), _vm._v(" "), _c("td", {
       domProps: {
@@ -3730,6 +3783,18 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fa fa-edit"
+    })]), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-info btn-sm",
+      attrs: {
+        title: "Actualizar Password"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.abrirModal("collector", "actualizar_password", collector);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-key"
     })])])]);
   }), 0)]), _vm._v(" "), _c("nav", [_c("ul", {
     staticClass: "pagination"
@@ -3873,9 +3938,9 @@ var render = function render() {
         textContent: _vm._s(esm)
       }
     });
-  }), 0)])]), _vm._v(" "), _vm.tipoAccion == 1 || _vm.tipoAccion == 2 ? _c("div", [_vm._m(1), _vm._v(" "), _vm.tipoAccion == 1 ? _c("div", [_c("div", {
+  }), 0)])]), _vm._v(" "), _vm.tipoAccion == 1 || _vm.tipoAccion == 2 ? _c("div", [_vm._m(2), _vm._v(" "), _vm.tipoAccion == 1 ? _c("div", [_c("div", {
     staticClass: "form-group"
-  }, [_vm._m(2), _vm._v(" "), _c("input", {
+  }, [_vm._m(3), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3899,7 +3964,7 @@ var render = function render() {
     }
   })])]) : _c("div", [_c("div", {
     staticClass: "form-group"
-  }, [_vm._m(3), _vm._v(" "), _c("input", {
+  }, [_vm._m(4), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3923,7 +3988,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(4), _vm._v(" "), _c("input", {
+  }, [_vm._m(5), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3947,7 +4012,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(5), _vm._v(" "), _c("input", {
+  }, [_vm._m(6), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3971,7 +4036,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(6), _vm._v(" "), _c("input", {
+  }, [_vm._m(7), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3995,7 +4060,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(7), _vm._v(" "), _c("input", {
+  }, [_vm._m(8), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4019,7 +4084,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(8), _vm._v(" "), _c("input", {
+  }, [_vm._m(9), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4043,7 +4108,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(9), _vm._v(" "), _c("input", {
+  }, [_vm._m(10), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4067,7 +4132,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(10), _vm._v(" "), _c("input", {
+  }, [_vm._m(11), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4118,7 +4183,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(11), _vm._v(" "), _c("input", {
+  }, [_vm._m(12), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4142,7 +4207,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(12), _vm._v(" "), _c("input", {
+  }, [_vm._m(13), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4166,7 +4231,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(13), _vm._v(" "), _c("input", {
+  }, [_vm._m(14), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4190,7 +4255,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(14), _vm._v(" "), _c("input", {
+  }, [_vm._m(15), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4214,7 +4279,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(15), _vm._v(" "), _c("input", {
+  }, [_vm._m(16), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4325,6 +4390,50 @@ var render = function render() {
     domProps: {
       textContent: _vm._s(_vm.observations)
     }
+  })])]) : _vm.tipoAccion == 4 ? _c("div", [_c("div", {
+    staticClass: "form-group"
+  }, [_vm._m(17), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.password,
+      expression: "password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "password"
+    },
+    domProps: {
+      value: _vm.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.password = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_vm._m(18), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.password_confirmation,
+      expression: "password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "password"
+    },
+    domProps: {
+      value: _vm.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.password_confirmation = $event.target.value;
+      }
+    }
   })])]) : _vm._e()])]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
@@ -4357,9 +4466,25 @@ var render = function render() {
         return _vm.actualizarDatosCollector();
       }
     }
+  }, [_vm._v("Actualizar")]) : _vm._e(), _vm._v(" "), _vm.tipoAccion == 4 ? _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.actualizarPasswordCollector();
+      }
+    }
   }, [_vm._v("Actualizar")]) : _vm._e()])])])])]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("span", {
+    staticClass: "text small text-danger"
+  }, [_c("em", [_vm._v("*El password por default de los nuevos usuarios es: "), _c("strong", [_vm._v("secret")])])]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Mail")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("RFC")]), _vm._v(" "), _c("th", [_vm._v("Direccion")]), _vm._v(" "), _c("th", [_vm._v("CP")]), _vm._v(" "), _c("th", [_vm._v("Ciudad")]), _vm._v(" "), _c("th", [_vm._v("Estado")]), _vm._v(" "), _c("th", [_vm._v("Estatus")]), _vm._v(" "), _c("th", [_vm._v("Opciones")])])]);
@@ -4507,6 +4632,26 @@ var staticRenderFns = [function () {
       "for": "detail"
     }
   }, [_vm._v("Detalles"), _c("span", {
+    staticClass: "text-danger small"
+  }, [_vm._v("*")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("label", {
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("Password"), _c("span", {
+    staticClass: "text-danger small"
+  }, [_vm._v("*")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("label", {
+    attrs: {
+      "for": "password_confirmation"
+    }
+  }, [_vm._v("Confirmar Password"), _c("span", {
     staticClass: "text-danger small"
   }, [_vm._v("*")])]);
 }];
@@ -4881,10 +5026,6 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(status.status)
       }
-    }), _vm._v(" "), _c("td", {
-      domProps: {
-        textContent: _vm._s(status.description)
-      }
     }), _vm._v(" "), _c("td", [status.active ? _c("div", [_c("button", {
       staticClass: "btn btn-outline-primary btn-sm",
       attrs: {
@@ -4910,18 +5051,6 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fa fa-toggle-off"
     }), _vm._v(" Inactivo\n                                    ")])])]), _vm._v(" "), _c("td", [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
-      attrs: {
-        type: "button"
-      },
-      on: {
-        click: function click($event) {
-          return _vm.abrirModal("status", "actualizar", status);
-        }
-      }
-    }, [_c("i", {
-      staticClass: "icon-pencil"
-    })]), _vm._v("  \n                                "), _c("button", {
       staticClass: "btn btn-danger btn-sm",
       attrs: {
         type: "button"
@@ -5048,36 +5177,6 @@ var render = function render() {
       }
     }
   })])]) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "form-group row"
-  }, [_c("label", {
-    staticClass: "col-md-3 form-control-label",
-    attrs: {
-      "for": "text-input"
-    }
-  }, [_vm._v("Descripcion de estatus")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-9"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.description,
-      expression: "description"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      placeholder: "Descripcion de estatus"
-    },
-    domProps: {
-      value: _vm.description
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.description = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -5151,7 +5250,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Estatus")]), _vm._v(" "), _c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Activo")]), _vm._v(" "), _c("th", [_vm._v("Opciones")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Estatus")]), _vm._v(" "), _c("th", [_vm._v("Activo")]), _vm._v(" "), _c("th", [_vm._v("Opciones")])])]);
 }];
 render._withStripped = true;
 

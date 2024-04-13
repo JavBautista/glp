@@ -145,7 +145,7 @@
         },
         methods:{
             listarEnvios(page,buscar){
-                console.log(buscar)
+                console.log('Listar Envios')
                 let me=this;
                 var url = '/customer/get-customers?page='+page+'&buscar='+buscar
                 axios.get(url).then(function (response) {

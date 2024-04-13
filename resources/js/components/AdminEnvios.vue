@@ -174,11 +174,12 @@
 
             },
             listarEnvios(page,buscar){
+                console.log('listarEnvios');
                 let me=this;
                 var url = '/admin/shipments/get-shipments?page='+page+'&buscar='+buscar;
                 axios.get(url).then(function (response) {
+                    console.log(response);
                     var respuesta  = response.data;
-                    console.log(respuesta);
                     me.arrayEnvios = respuesta.shipments.data;
                     me.pagination  = respuesta.pagination;
                     me.fecha_ini   = new Date(respuesta.fecha_ini);

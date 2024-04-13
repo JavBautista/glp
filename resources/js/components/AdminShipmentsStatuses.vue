@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th>Estatus</th>
-                                <th>Descripción</th>
+
                                 <!--<th>Order</th>-->
                                 <th>Activo</th>
                                 <th>Opciones</th>
@@ -31,7 +31,7 @@
                             <tr v-for="status in arrayStatuses" :key="status.id">
 
                                 <td v-text="status.status"></td>
-                                <td v-text="status.description"></td>
+
                                 <!--<td v-text="status.order"></td>-->
                                 <td>
                                     <div v-if="status.active">
@@ -47,9 +47,9 @@
 
                                 </td>
                                 <td>
-                                    <button type="button" @click="abrirModal('status','actualizar',status)" class="btn btn-warning btn-sm">
+                                   <!-- <button type="button" @click="abrirModal('status','actualizar',status)" class="btn btn-warning btn-sm">
                                       <i class="icon-pencil"></i>
-                                    </button> &nbsp;
+                                    </button> &nbsp; -->
                                     <button type="button" @click="eliminarStatus(status.id)" class="btn btn-danger btn-sm">
                                       <i class="icon-trash"></i>
                                     </button> &nbsp;
@@ -88,12 +88,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <!--<div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Descripcion de estatus</label>
                                 <div class="col-md-9">
                                     <input type="text" v-model="description" class="form-control" placeholder="Descripcion de estatus">
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div v-show="errorStatus" class="form-group row div-error">
                                 <div class="text-center text-error">
@@ -153,7 +153,7 @@
                 this.errorStatus=0;
                 this.errorMostrarMsjStatus =[];
                 if (!this.status) this.errorMostrarMsjStatus.push("El nombre del estatus no puede estar vacío.");
-                if (!this.description) this.errorMostrarMsjStatus.push("La description del estatus no puede estar vacío.");
+                //if (!this.description) this.errorMostrarMsjStatus.push("La description del estatus no puede estar vacío.");
                 if (this.errorMostrarMsjStatus.length) this.errorStatus = 1;
                 return this.errorStatus;
             },
@@ -161,8 +161,8 @@
                 if (this.validarStatus()){ return; }
                 let me = this;
                 axios.post('/admmin/shipments_status/store',{
-                    'status': this.status,
-                    'description': this.description
+                    'status': this.status
+                    //'description': this.description
                 }).then(function (response) {
                     me.cerrarModal();
                     me.listarStatuses();
@@ -175,8 +175,8 @@
                 let me = this;
                 axios.put('/admmin/shipments_status/update',{
                     'id': this.status_id,
-                    'status': this.status,
-                    'description': this.description
+                    'status': this.status
+                    //'description': this.description
                 }).then(function (response) {
                     me.cerrarModal();
                     me.listarStatuses();

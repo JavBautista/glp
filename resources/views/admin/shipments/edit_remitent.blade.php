@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 @section('content')
-@include('admin.breadcrumb',['item'=>'shipments.edit.remitent'])
+@include('admin.breadcrumb',['item'=>'shipments.edit.remitent','shipment_id'=>$shipment->id])
 <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-10">

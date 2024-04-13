@@ -41,6 +41,11 @@
         <li class="breadcrumb-item"><a href="/admin/customers">Clientes</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar</li>
       @break
+      @case('customers.reset-pass')
+        <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
+        <li class="breadcrumb-item"><a href="/admin/customers">Clientes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Reset Pass</li>
+      @break
       @case('customers.edit.status')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/customers">Clientes</a></li>
@@ -74,30 +79,35 @@
       @case('shipments.edit.remitent')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/shipments">Envios</a></li>
+        <li class="breadcrumb-item"><a href="/admin/shipments/detail/{{$shipment_id}}">Detalle</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar Remitente</li>
       @break
 
       @case('shipments.edit.destinatary')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/shipments">Envios</a></li>
+        <li class="breadcrumb-item"><a href="/admin/shipments/detail/{{$shipment_id}}">Detalle</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar Destinatario</li>
       @break
 
       @case('shipments.edit.status')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/shipments">Envios</a></li>
+        <li class="breadcrumb-item"><a href="/admin/shipments/detail/{{$shipment_id}}">Detalle</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar Estatus</li>
       @break
 
       @case('shipments.edit.cost')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/shipments">Envios</a></li>
+        <li class="breadcrumb-item"><a href="/admin/shipments/detail/{{$shipment_id}}">Detalle</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar Costo</li>
       @break
 
       @case('shipments.edit.disabled')
         <li class="breadcrumb-item"><a href="/admin">Administrador</a></li>
         <li class="breadcrumb-item"><a href="/admin/shipments">Envios</a></li>
+        <li class="breadcrumb-item"><a href="/admin/shipments/detail/{{$shipment_id}}">Detalle</a></li>
         <li class="breadcrumb-item active" aria-current="page">Editar Baja/alta</li>
       @break
 

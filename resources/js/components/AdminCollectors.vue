@@ -10,6 +10,7 @@
               </button>
           </div>
           <div class="card-body">
+
               <div class="form-group row">
                   <div class="col-md-6">
                       <div class="input-group">
@@ -22,6 +23,7 @@
                       </div>
                   </div>
               </div>
+              <span class="text small text-danger"><em>*El password por default de los nuevos usuarios es: <strong>secret</strong> </em></span>
               <table class="table table-bordered table-striped table-sm">
                   <thead>
                       <tr>
@@ -41,7 +43,7 @@
                             <td v-text="collector.mail"></td>
                             <td v-text="collector.name"></td>
                             <td v-text="collector.rfc"></td>
-                            <td v-text="collector.addres"></td>
+                            <td v-text="collector.address"></td>
                             <td v-text="collector.zip_code"></td>
                             <td v-text="collector.city"></td>
                             <td v-text="collector.state"></td>
@@ -59,6 +61,7 @@
 
                                 <button class="btn btn-info btn-sm" @click="abrirModal('collector','ver_datos', collector)" title="Ver"><i class="fa fa-eye"></i></button>
                                 <button class="btn btn-info btn-sm" @click="abrirModal('collector','actualizar_datos', collector)" title="Editar"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-info btn-sm" @click="abrirModal('collector','actualizar_password', collector)" title="Actualizar Password"><i class="fa fa-key"></i></button>
                             </td>
 
                         </tr>
@@ -228,6 +231,16 @@
                             <dd class="col-8" v-text="observations"></dd>
                           </dl>
                         </div><!--./ifelse tipoAccion 3-->
+                        <div v-else-if="tipoAccion==4">
+                          <div class="form-group">
+                            <label for="password">Password<span class="text-danger small">*</span></label>
+                            <input type="password" class="form-control" v-model="password">
+                          </div>
+                          <div class="form-group">
+                            <label for="password_confirmation">Confirmar Password<span class="text-danger small">*</span></label>
+                            <input type="password" class="form-control" v-model="password_confirmation">
+                          </div>
+                        </div>
 
                     </form>
                 </div>
@@ -235,6 +248,8 @@
                     <button type="button" class="btn btn-secondary"  @click="cerrarModal()">Cerrar</button>
                     <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarCollector()">Guardar</button>
                     <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarDatosCollector()">Actualizar</button>
+
+                    <button type="button" v-if="tipoAccion==4" class="btn btn-primary" @click="actualizarPasswordCollector()">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -279,6 +294,9 @@
               reference:'',
               detail:'',
               observations:'',
+
+              password:'',
+              password_confirmation:'',
 
               error_server:0,
               errors_server_msg:[],
@@ -522,6 +540,24 @@
                     me.errors_server_msg=error.response.data.errors;
                 });
             },
+            actualizarPasswordCollector(){
+                if(this.validarPasswordCollector()){
+                    return;
+                }
+                let me=this;
+                console.log('Vaqmos a Guardar: '+me.password)
+                axios.put('/admin/collectors/update-password',{
+                  'collector_id':me.collector_id,
+                  'password':me.password,
+                }).then(function (response){
+                  console.log(response)
+                  me.cerrarModal();
+                  me.loadCollectors(me.pagination.current_page,me.buscar,me.criterio)
+                }).catch(function (error){
+                    me.error_server=1;
+                    me.errors_server_msg=error.response.data.errors;
+                });
+            },
             validarDatosCollector(accion){
                 this.errorCollector=0;
                 this.errorMostrarMsjCollector=[];
@@ -540,6 +576,28 @@
                 if(!this.state) this.errorMostrarMsjCollector.push('El estado no puede estar vacio');
                 if(!this.reference) this.errorMostrarMsjCollector.push('La referencia no puede estar vacio');
                 if(!this.detail) this.errorMostrarMsjCollector.push('El detalle no puede estar vacio');
+                if(this.errorMostrarMsjCollector.length) this.errorCollector=1;
+                return this.errorCollector;
+            },
+            validarPasswordCollector(){
+                this.errorCollector = 0;
+                this.errorMostrarMsjCollector = [];
+
+                // Validar que el campo de contraseña no esté vacío
+                if (!this.password) {
+                    this.errorMostrarMsjCollector.push('El campo contraseña no puede estar vacío');
+                }
+
+                // Validar que la longitud de la contraseña sea al menos 8 caracteres
+                if (this.password && this.password.length < 8) {
+                    this.errorMostrarMsjCollector.push('La contraseña debe tener al menos 8 caracteres');
+                }
+
+                // Validar que el campo de confirmación de contraseña coincida
+                if (this.password !== this.password_confirmation) {
+                    this.errorMostrarMsjCollector.push('La confirmación de la contraseña no coincide');
+                }
+
                 if(this.errorMostrarMsjCollector.length) this.errorCollector=1;
                 return this.errorCollector;
             },
@@ -613,6 +671,16 @@
                                 this.reference = data['reference'];
                                 this.detail = data['detail'];
                                 this.observations = data['observations'];
+                                break;
+                            }
+                            case 'actualizar_password':{
+                                this.limpiarDatos();
+                                this.modal=1;
+                                this.tipoAccion =4;
+                                this.tituloModal='Actualizar password para '+data['name'];
+                                this.collector_id= data['id'];
+                                this.password = '';
+                                this.password_confirmation = '';
                                 break;
                             }
                         }

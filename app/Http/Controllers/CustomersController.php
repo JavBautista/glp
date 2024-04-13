@@ -18,7 +18,7 @@ class CustomersController extends Controller
     	$password='secret';
 		$user= User::create([
             'name' => $request->input('name'),
-            'email' => $request->input('mail'),
+            'email' => $request->input('email'),
             'password' => Hash::make($password),
         ]);
 
@@ -29,7 +29,7 @@ class CustomersController extends Controller
         $user_id = $user->id;
 
     	$customer = Customer::create([
-                'mail'  => $request->input('mail'),
+                'mail'  => $request->input('email'),
                 'company'  => $request->input('company'),
                 'name'  => $request->input('name'),
                 'rfc'  => $request->input('rfc'),
@@ -56,7 +56,6 @@ class CustomersController extends Controller
 
     public function update(UpdateCustomerRequest $request){
         $customer = Customer::find($request->input('customer_id'));    
-        $customer->mail = $request->input('mail');
         $customer->company = $request->input('company');
         $customer->name = $request->input('name');
         $customer->rfc = $request->input('rfc');
@@ -82,6 +81,30 @@ class CustomersController extends Controller
         Session::flash('alert', 'Cliente actualizado satisfactoriamente!');
         Session::flash('alert-class', 'alert-success');
         return redirect("/admin/customers"); 
+    }
+
+    public function resetPass(Request $request){
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'customer_id.required' => 'El campo ID del cliente es obligatorio.',
+            'customer_id.exists' => 'El ID del cliente proporcionado no existe en la base de datos.',
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password.string' => 'La contraseña debe ser una cadena de caracteres.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ]);
+
+        $customer = Customer::find($request->input('customer_id'));
+
+        $user = User::find($customer->user_id);
+        $user->password= Hash::make($request->password);
+        $user->save();
+
+        Session::flash('alert', 'Cliente actualizado satisfactoriamente!');
+        Session::flash('alert-class', 'alert-success');
+        return redirect("/admin/customers");
     }
 
     public function updateStatus(Request $request){

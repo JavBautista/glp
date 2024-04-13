@@ -4,8 +4,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-	        <h1>Ver Cliente</h1>
-
 	        @include('common_parts.customer_information')
 
         </div>

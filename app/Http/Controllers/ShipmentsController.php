@@ -138,6 +138,9 @@ class ShipmentsController extends Controller
             $remitent->content= $request->input('remitent_content');
             $remitent->declared_value= $request->input('remitent_declared_value');
         $remitent->save();
+
+        //$this->saveShipmentHistory($shipment->id,$shipment->status->status,'Actualización datos de remitente.');
+
         Session::flash('alert', 'Datos de remitente actualizados satisfactoriamente! ');
         Session::flash('alert-class', 'alert-success');
         return redirect("/admin/shipments/detail/".$request->input('shipment_id'));
@@ -165,6 +168,7 @@ class ShipmentsController extends Controller
             $destinatary->weight= $request->input('destinatary_weight');
             $destinatary->unit_measure= $request->input('destinatary_unit_measure');
         $destinatary->save();
+        //$this->saveShipmentHistory($shipment->id,$shipment->status->status,'Actualización datos de destinatario.');
         Session::flash('alert', 'Datos de destinatario actualizados satisfactoriamente! ');
         Session::flash('alert-class', 'alert-success');
         return redirect("/admin/shipments/detail/".$request->input('shipment_id'));

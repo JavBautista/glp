@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="alert alert-dark text-center">
 			<h4><em>#Num. Rastreo {{ $shipment->tracking_number }}</em></h4>
-			<h5 class="small">Folio.{{ $shipment->id }}  Status: {{ $shipment->status->status }} | Costo: {{ $shipment->cost }} | Creación: {{ $shipment->created_at }}</h5>
+			<h5 class="small">Folio.{{ $shipment->id }}  Status: {{ strtoupper($shipment->status->status) }} | <strong>Costo: MXN ${{ number_format($shipment->cost, 2, '.', '') }}</strong> | Creación: {{ $shipment->created_at }}</h5>
 		</div>
 
 	</div>
@@ -134,17 +134,19 @@
 <div class="row mt-2">
 	<div class="col-12">
 		<div class="jumbotron">
-		<h3>Actualizaciones</h3>
+		<h3 class="text-center">Actualizaciones</h3>
+		<hr>
 		<table class="table">
               @forelse($shipment->history as $history)
                 <tr class="small">
                   <td>{{$history->created_at}}</td>
-                  <td>{{$history->status}}</td>
+                  <td>{{strtoupper($history->status)}}</td>
                   <td>{{$history->description}}</td>
                   <td>{{$history->comentary}}</td>
                   <td>
                   	@if($history->image!=NULL)
-                  		<a href="/images/shipments/{{$history->image}}" target="_blank" class="btn btn-info"><span class="fa fa-image"></span></a>
+                  		<a href="/storage/{{$history->image}}" target="_blank" class="btn btn-info"><span class="fa fa-image"></span></a>
+                  		<!--<img src="{ { asset('storage/' . $history->image) }}" width="20%" alt="">-->
                   	@endif
                   </td>
                 </tr>

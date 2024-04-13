@@ -108,5 +108,13 @@ class CollectorsController extends Controller
         $collector->save();
     }
 
+    public function updatePassword(Request $request){
+        if(!$request->ajax()) return redirect('/');
+        $collector = Collector::find($request->collector_id);
+        $user = User::find($collector->user_id);
+        $user->password= Hash::make($request->password);
+        $user->save();
+    }
+
 
 }
