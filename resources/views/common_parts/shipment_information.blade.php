@@ -110,6 +110,7 @@
                 <th>Long.</th>
                 <th>Ancho</th>
                 <th>Altura</th>
+                <th>Peso volumétrico</th>
               </tr>
             </thead>
             <tbody>
@@ -121,6 +122,7 @@
 		                <td>{{ $pack->length }}</td>
 		                <td>{{ $pack->width }}</td>
 		                <td>{{ $pack->height }}</td>
+		                <td>{{ ($pack->length * $pack->width * $pack->height)/5000 }}</td>
 		            </tr>
 							@endforeach
 					</tbody>

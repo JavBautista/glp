@@ -20,11 +20,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 |--------------------------------------------------------------------------
 | LINKS PUBLIC WEB
 */
-Route::get('/', 'WebPagesController@index');
-Route::get('/blog', 'WebPagesController@blog');
-Route::get('/about', 'WebPagesController@about');
-Route::get('/services', 'WebPagesController@services');
-Route::get('/contact', 'WebPagesController@contact');
+Route::get('/', 'WebPagesController@index')->name('web.home');
+Route::get('/blog', 'WebPagesController@blog')->name('web.blog');;
+Route::get('/about', 'WebPagesController@about')->name('web.about');
+Route::get('/services', 'WebPagesController@services')->name('web.services');
+Route::get('/contact', 'WebPagesController@contact')->name('web.contact');
 
 Route::get('/privacidad', function(){
     return view('web.privacidad');

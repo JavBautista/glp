@@ -50,25 +50,25 @@
             <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
               <ul class="navbar-nav  ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{{route('web.home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#"> Acerca de </a>
+                  <a class="nav-link" href="{{route('web.about')}}"> Quienes Somos </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#"> Servicios </a>
+                  <a class="nav-link" href="{{route('web.services')}}"> Servicios </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Contacto</a>
+                  <a class="nav-link" href="{{route('web.contact')}}">Contacto</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/login">Login</a>
+                  <a class="nav-link" href="{{route('login')}}">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://wa.me/5212226088961">
+                  <a class="nav-link" href="https://wa.me/5212228427308">
                     <img src="{{ asset('webglp/images/whatsapp.png') }} " style="width: 2rem; height: 2rem;" alt="">
                     <span>
-                      (+52) 222 608 8961
+                      (+52) 222 842 7308
                     </span>
                   </a>
                 </li>
@@ -146,8 +146,7 @@
                 <a href="">
                   <img src="{{asset('webglp/images/location.png')}}" alt="">
                   <span>
-                    CALLE 13 SUR NO. 1525, BARRIO SANTA MARIA XIXITLA
-                    SAN PEDRO CHOLULA, PUEBLA CP 72760.
+                    Puebla, Pue.
                   </span>
                 </a>
               </div>
@@ -158,7 +157,14 @@
                 <a href="">
                   <img src="{{asset('webglp/images/telephone.png')}}" alt="">
                   <span>
-                    (+52) 222 608 8961
+                    (+52) 222 842 7308
+                  </span>
+                </a>
+                <br>
+                <a href="">
+                  <img src="{{asset('webglp/images/telephone.png')}}" alt="">
+                  <span>
+                    (+52) 222 371 8042
                   </span>
                 </a>
               </div>

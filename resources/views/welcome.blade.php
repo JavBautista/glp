@@ -82,6 +82,39 @@
     </section>
     <!-- end work section -->
 
+    <!-- service section -->
+    <section class="service_section layout_padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="custom_heading-container">
+                    <h3 class=" ">BENEFICIOS</h3>
+                </div>
+                <p>
+                    En GLP, nos esforzamos por ir más allá de la simple entrega de paquetes. Nuestros servicios van acompañados de una serie de beneficios diseñados para proporcionarle comodidad, seguridad y confianza en cada envío. Al elegir GLP, disfrutará de:
+                </p>
+                <div class="service_container">
+                  <ul class="custom-list-style" style="text-align: left; list-style-type: disc;">
+                    <li><strong>Guías Prepagadas:</strong> Simplifique el proceso de envío con guías prepagadas listas para utilizar.</li>
+                    <li><strong>Convenios de Servicio:</strong> Ofrecemos acuerdos personalizados para satisfacer sus necesidades específicas de envío.</li>
+                    <li><strong>Acceso a Línea de Crédito:</strong> (Sujeto a aprobación) Obtenga acceso a una línea de crédito para mayor flexibilidad en sus envíos.</li>
+                    <li><strong>Unidades con GPS y Monitoreo:</strong> Su carga está siempre protegida con nuestras unidades equipadas con tecnología de monitoreo avanzada.</li>
+                    <li><strong>Atención Personalizada:</strong> Cada cliente recibe atención personalizada de nuestro equipo, liderado por un asesor comercial dedicado.</li>
+                    <li><strong>Página de Internet:</strong> Acceda a nuestra plataforma en línea para gestionar envíos, rastrear paquetes y más, todo desde la comodidad de su dispositivo.</li>
+                  </ul>
+                </div>
+                <p>
+                    Estos beneficios son solo una muestra del compromiso de GLP con la excelencia en logística y servicio al cliente. Confíe en nosotros para simplificar sus operaciones de envío y superar sus expectativas en cada paso del camino.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <img src="{{ asset('webglp/images/glp_02.png') }}" alt="Imagen de Beneficios" class="img-fluid" style="padding-top:8px">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- end service section -->
 
 
     <!-- contact section -->
