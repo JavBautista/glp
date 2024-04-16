@@ -4,8 +4,8 @@
  <title> #{{ $shipment->tracking_number }}</title>
  <style>
  	body{
- 		font-family: "Lucida Console", Monaco, monospace !important;
- 		font-size: 9px;
+ 		font-family: 'Helvetica', sans-serif !important;
+ 		font-size: 8px;
  	}
  </style>
 </head>
