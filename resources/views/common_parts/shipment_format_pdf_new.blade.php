@@ -1,8 +1,4 @@
 <style>
-    body {
-    font-family: sans-serif;  /* Cambia 'San-Serif-Font' al nombre del tipo de letra que desees usar */
-    }
-
     table {
         border-collapse: collapse;
         width: 100%;
@@ -17,13 +13,8 @@
     }
 
     .td-header {
-        width: 90%;
         text-align: center;
         padding: 2px;
-        background-image: url("{{asset('webglp/images/glp_imp_800x200.jpg')}}"); /* Ruta de la imagen */
-        background-repeat: no-repeat;
-        background-size: contain; /* Ajusta la imagen al tamaño de la celda */
-        background-position: center center; /* Alinea la imagen en el centro */
     }
 
     th {
@@ -35,31 +26,39 @@
         vertical-align: middle;
         text-align: center;
     }
+
+    .text-primary{
+        color: #014AAD;
+    }
+
+    .text-secondary{
+        color: #FF5555;
+    }
 </style>
 <div class="container">
 	<table>
         <tr>
             <td class="td-header">
-
+                <img src="{{asset('webglp/images/GLP_logo_h_800x200.png')}}" width="30%"  alt="">
             </td>
             <td rowspan="3" class="text-center">
-                <h3>#Guía</h3>
+                <h1>#Guía</h1>
                 <img alt="barcode" src="{{$barcontent}}">
             </td>
         </tr>
         <tr>
             <td class="text-center">
-                <h3>GESTI&Oacute;N LOG&Iacute;STICA DE PAQUETES Y MENSAJER&Iacute;A</h3>
-                <p>Puebla, Pue. | (+52) 222 842 7308 | (+52) 222 371 8042</p>
+                <h3 class="text-secondary">GESTI&Oacute;N LOG&Iacute;STICA DE PAQUETES Y MENSAJER&Iacute;A</h3>
+                <p class="text-primary"><strong>Puebla, Pue. | (+52) 222 842 7308 | (+52) 222 371 8042</strong></p>
             </td>
         </tr>
         <tr>
             <td>
-                <h3>Fecha Emision: ________/________/________/</h3>
+                <!--<h3>Fecha Emision: ________/________/________/</h3>-->
+                <h2>Fecha Emisi&oacute;n: {{ $shipment->created_at->format('d/m/Y') }}</h2>
             </td>
         </tr>
-    </table>
-    <table>
+
         <tr>
             <td width="50%">
             	<h3>ORIGIEN</h3>
@@ -117,26 +116,26 @@
     <table>
         <tr>
             <td class="td-header">
-
+                <img src="{{asset('webglp/images/GLP_logo_h_800x200.png')}}" width="30%"  alt="">
             </td>
             <td rowspan="3" class="text-center">
-                <h3>#Guía</h3>
+                <h1>#Guía</h1>
                 <img alt="barcode" src="{{$barcontent}}">
             </td>
         </tr>
         <tr>
             <td class="text-center">
-                <h3>GESTI&Oacute;N LOG&Iacute;STICA DE PAQUETES Y MENSAJER&Iacute;A</h3>
-                <p>Puebla, Pue. | (+52) 222 842 7308 | (+52) 222 371 8042</p>
+                <h3 class="text-secondary">GESTI&Oacute;N LOG&Iacute;STICA DE PAQUETES Y MENSAJER&Iacute;A</h3>
+                <p class="text-primary"><strong>Puebla, Pue. | (+52) 222 842 7308 | (+52) 222 371 8042</strong></p>
             </td>
         </tr>
         <tr>
             <td>
-                <h3>Fecha Emision: ________/________/________/</h3>
+                <!--<h3>Fecha Emision: ________/________/________/</h3>-->
+                <h2>Fecha Emisi&oacute;n: {{ $shipment->created_at->format('d/m/Y') }}</h2>
             </td>
         </tr>
-    </table>
-    <table>
+
         <tr>
             <td width="50%">
                 <h3>ORIGIEN</h3>
@@ -189,3 +188,4 @@
         </tfoot>
     </table>
 </div>
+

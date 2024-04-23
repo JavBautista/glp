@@ -9,12 +9,21 @@
 
             <div class="container padding-bottom-3x mb-1">
               <div class="card mb-3">
+
                 <div class="p-4 text-center text-white text-lg bg-dark rounded-top"><span class="text-uppercase">Número de Rastreo #Trk  - </span><span class="text-medium">{{  $shipment->tracking_number }}</span></div>
+
                 <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
-                  <div class="w-100 text-center py-1 px-2"><span class="text-medium">Via de envio:</span> Terrestre Express</div>
+                  <div class="w-100 text-center py-1 px-2"><span class="text-medium">Destinatario:</span> {{$shipment->destinatary->name}}</div>
+                  <div class="w-100 text-center py-1 px-2"><span class="text-medium">Municipio:</span> {{$shipment->destinatary->city}}</div>
+                  <div class="w-100 text-center py-1 px-2"><span class="text-medium">Estado:</span> {{$shipment->destinatary->state}}</div>
+                </div>
+
+                <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
                   <div class="w-100 text-center py-1 px-2"><span class="text-medium">Estatus:</span> {{ strtoupper($shipment->status->status) }}</div>
                   <div class="w-100 text-center py-1 px-2"><span class="text-medium">Creación:</span> {{ strtoupper($shipment->created_at) }}</div>
                 </div>
+
+
                 <div class="card-body">
                   <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
                     @php

@@ -11,13 +11,13 @@
       </h3>
     </div>
 
-    <p class="layout_padding2-top">Somos una empresa nacional joven y dinámica; con experiencia en servicios de Mensajería, Paquetería y LTL con amplia cobertura. </p>
+    <p class="layout_padding2-top text-blue">Somos una empresa nacional joven y dinámica; con experiencia en servicios de Mensajería, Paquetería y LTL con amplia cobertura. </p>
 
-    <p class="layout_padding2-top">Comprometidos para satisfacer las necesidades de nuestros clientes, a través de un servicio de envíos confiable, seguro, rápido y amable.</p>
+    <p class="layout_padding2-top text-blue">Comprometidos para satisfacer las necesidades de nuestros clientes, a través de un servicio de envíos confiable, seguro, rápido y amable.</p>
 
-    <p class="layout_padding2-top">Somos una empresa flexible que trata al cliente como único, por ello contamos con una amplia variedad de opciones en nuestro servicio.</p>
+    <p class="layout_padding2-top text-blue">Somos una empresa flexible que trata al cliente como único, por ello contamos con una amplia variedad de opciones en nuestro servicio.</p>
 
-    <p class="layout_padding2-top">Nuestra misión es establecer relaciones duraderas con nuestros clientes, basadas en la confianza y el compromiso. Buscamos siempre superar las expectativas y proporcionar soluciones innovadoras en logística.</p>
+    <p class="layout_padding2-top text-blue">Nuestra misión es establecer relaciones duraderas con nuestros clientes, basadas en la confianza y el compromiso. Buscamos siempre superar las expectativas y proporcionar soluciones innovadoras en logística.</p>
 
 
   </div>

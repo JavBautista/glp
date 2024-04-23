@@ -27,6 +27,7 @@
   <link href="{{ asset('webglp/css/style.css') }}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{{ asset('webglp/css/responsive.css') }}" rel="stylesheet" />
+  @yield('styles')
 </head>
 
 <body>

@@ -1,89 +1,282 @@
 @extends('layouts.app_web')
+@section('styles')
+    <style>
+        .cobertura_section {
+            background-image: url('{{ asset('webglp/images/map_mx.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 80px;
+            background-color: rgba(255, 128, 64, 0.5);  /* Color de fondo con transparencia al 50% */
+        }
+    </style>
+@endsection
+
 @section('content')
-<!-- slider section -->
-    <section class=" slider_section position-relative">
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="slider_item-box layout_padding2">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="img-box">
-                      <div>
-                        <img src="{{ asset('webglp/images/slide-01.jpg') }}" alt="" class="" />
-                      </div>
+  <!-- slider section -->
+  <section class=" slider_section position-relative">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="slider_item-box layout_padding2">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <div>
+                      <img src="{{ asset('webglp/images/slide-03.jpg') }}" alt="" class="" />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="detail-box">
-                      <div>
-                        <h1>
-                          GLP
-                        </h1>
-                        <p>
-                          GESTION LOGISTICA DE MENSAJERIA Y PAQUTERIA
-                        </p>
-                      </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <div>
+                      <h1 class="text-primary">GLP</h1>
+                      <h2 class="text-orange">
+                        Envíos Confiables a tu Puerta
+                      </h2>
+                      <p>
+                        Confía en GLP para tus envíos. Ofrecemos recolección y entrega a domicilio, asegurando que tus paquetes lleguen siempre a tiempo y en perfectas condiciones.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
-      </div>
-      <div class="container">
-        <div class="slider_nav-box">
-          <div class="btn-box">
-            <a href="">
-              Leer mas.
-            </a>
-            <hr>
-          </div>
-          <div class="custom_carousel-control">
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end slider section -->
-   <!-- work section -->
-    <section class="contact_section layout_padding" style="background-color:#ccc">
-      <div class="custom_heading-container">
-        <h3 class=" ">
-          RASTREA TU PAQUETE
-        </h3>
-      </div>
-      <div class="container layout_padding2-top">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <form action="{{ route('trackingcontrol.search-trk') }}">
-              <div>
-                <input type="text" placeholder="# RASTREO" name="tracking-number" required>
+        <div class="carousel-item">
+          <div class="slider_item-box layout_padding2">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <div>
+                      <img src="{{ asset('webglp/images/slide-02.jpg') }}" alt="" class="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <div>
+                      <h1>
+                        Innovación y Seguridad en Cada Envío
+                      </h1>
+                      <p>
+                        Descubre los beneficios de GLP: unidades con GPS, atención personalizada, guías prepagadas y más. Tu envío está en buenas manos con nosotros.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="d-flex justify-content-center ">
-                <button>
-                  BUSCAR
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
-
+        <div class="carousel-item">
+          <div class="slider_item-box layout_padding2">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <div>
+                      <img src="{{ asset('webglp/images/slide-01.jpg') }}" alt="" class="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <div>
+                      <h1>
+                        Servicio Personalizado y Flexible
+                      </h1>
+                      <p>
+                        En GLP, tratamos a cada cliente como único. Desde recolección a domicilio hasta opciones de seguro de mercancía, garantizamos soluciones adaptadas a tus necesidades.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-    <!-- end work section -->
+    </div>
+    <div class="container">
+      <div class="slider_nav-box">
+        <div class="btn-box">
+          <a href="">
+            Leer mas.
+          </a>
+          <hr>
+        </div>
+        <div class="custom_carousel-control">
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end slider section -->
 
-    <!-- service section -->
-    <section class="service_section layout_padding-bottom">
+  <!-- rastrear section -->
+  <section class="contact_section layout_padding" style="background-color:#ccc">
+    <div class="custom_heading-container">
+      <h3 class=" ">
+        RASTREA TU PAQUETE
+      </h3>
+    </div>
+    <div class="container layout_padding2-top">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <form action="{{ route('trackingcontrol.search-trk') }}">
+            <div>
+              <input type="text" placeholder="# RASTREO" name="tracking-number" required>
+            </div>
+            <div class="d-flex justify-content-center ">
+              <button>
+                BUSCAR
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- end rastrear section -->
+
+  <!-- cobertura section -->
+  <section class="contact_section cobertura_section layout_padding">
+    <div class="custom_heading-container">
+      <h3 class=" ">
+        COBERTURA
+      </h3>
+    </div>
+    <div class="container layout_padding2-top">
+      <div class="row">
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>PUEBLA</strong></li>
+            <li>Puebla</li>
+            <li>San Pedro Cholula</li>
+            <li>San Andrés Cholula</li>
+            <li>Cuautlancingo</li>
+            <li>Coronango</li>
+            <li>San Miguel Xoxtla</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>CIUDAD DE MEXICO </strong></li>
+            <li>Álvaro Obregón</li>
+            <li>Azcapotzalco</li>
+            <li>Benito Juárez</li>
+            <li>Coyoacán</li>
+            <li>Cuauhtémoc</li>
+            <li>Gustavo A. Madero</li>
+            <li>Iztacalco</li>
+            <li>Iztapalapa</li>
+            <li>Miguel Hidalgo</li>
+            <li>Tlalpan</li>
+            <li>Venustiano Carranza</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>EDO MEX</strong></li>
+            <li>Toluca</li>
+            <li>Lerma</li>
+            <li>Metepec</li>
+            <li>Atizapán</li>
+            <li>Atizapán de Zaragoza</li>
+            <li>Naucalpan</li>
+            <li>Tlalnepantla</li>
+            <li>Tepotzotlán</li>
+            <li>Cuautitlán Izcalli</li>
+            <li>Cuautitlán</li>
+            <li>Tultitlán</li>
+            <li>Ecatepec</li>
+            <li>Coacalco</li>
+            <li>Nezahualcóyotl</li>
+            <li>Zinacantepec</li>
+            <li>San Mateo Atenco</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>GUANAJUATO</strong></li>
+            <li>León</li>
+            <li>Silao</li>
+            <li>Irapuato</li>
+            <li>Celaya</li>
+            <li>Salamanca</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>VERACRUZ</strong></li>
+            <li>Veracruz</li>
+            <li>Boca</li> del Río
+            <li>Xalapa</li>
+            <li>Córdoba</li>
+            <li>Orizaba</li>
+            <li>Coatzacoalcos</li>
+            <li>Poza</li> Rica
+            <li>Tuxpan</li>
+            <li>Minatitlán</li>
+            <li>Perote</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>TLAXCALA</strong></li>
+            <li>Tlaxcala</li>
+            <li>Huamantla</li>
+            <li>Apizaco</li>
+            <li>San Pablo del Monte</li>
+            <li>Papalotla</li>
+            <li>Xicohtzingo</li>
+            <li>Zacatelco</li>
+            <li>Tenancingo</li>
+            <li>Santa Ana Chiautempan</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>JALISCO</strong></li>
+            <li>Guadalajara</li>
+            <li>Zapopán</li>
+            <li>Tonalá</li>
+            <li>San Pedro Tlaquepaque</li>
+          </ul>
+        </div>
+        <div class="col-md-3 mx-auto">
+          <ul class="list-unstyled">
+            <li><strong>NUEVO LEON</strong></li>
+            <li>Monterrey</li>
+            <li>Santa Catarina</li>
+            <li>San Pedro Garza García</li>
+            <li>San Nicolás de los Garza</li>
+            <li>Apodaca</li>
+            <li>Guadalupe</li>
+            <li>Gral. Escobedo</li>
+          </ul>
+        </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- end cobertura section -->
+
+  <!-- service section -->
+  <section class="service_section layout_padding-bottom">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -112,43 +305,43 @@
             </div>
         </div>
     </div>
-</section>
+  </section>
+  <!-- end service section -->
 
-    <!-- end service section -->
 
-
-    <!-- contact section -->
-    <section class="contact_section layout_padding">
-      <div class="custom_heading-container">
-        <h3 class=" ">
-          CONTACTANOS
-        </h3>
-      </div>
-      <div class="container layout_padding2-top">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <form action="">
-              <div>
-                <input type="text" placeholder="NOMBRE">
-              </div>
-              <div>
-                <input type="email" placeholder="EMAIL">
-              </div>
-              <div>
-                <input type="text" placeholder="NÚMERO DE CONTACTANOS">
-              </div>
-              <div>
-                <input type="text" class="message-box" placeholder="MENSAJE">
-              </div>
-              <div class="d-flex justify-content-center ">
-                <button>
-                  SEND
-                </button>
-              </div>
-            </form>
-          </div>
+  <!-- contact section -->
+  <section class="contact_section layout_padding">
+    <div class="custom_heading-container">
+      <h3 class=" ">
+        CONTACTANOS
+      </h3>
+    </div>
+    <div class="container layout_padding2-top">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <form action="">
+            <div>
+              <input type="text" placeholder="NOMBRE">
+            </div>
+            <div>
+              <input type="email" placeholder="EMAIL">
+            </div>
+            <div>
+              <input type="text" placeholder="NÚMERO DE CONTACTANOS">
+            </div>
+            <div>
+              <input type="text" class="message-box" placeholder="MENSAJE">
+            </div>
+            <div class="d-flex justify-content-center ">
+              <button>
+                SEND
+              </button>
+            </div>
+          </form>
         </div>
-
       </div>
-    </section>
+
+    </div>
+  </section>
+  <!-- contact section -->
 @endsection

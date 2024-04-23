@@ -8,6 +8,7 @@
         </h3>
       </div>
 
+      <span class="text-blue">
      	<p>En GLP, nos enorgullece ofrecer una gama completa de servicios de mensajería y paquetería diseñados para satisfacer las necesidades únicas de nuestros clientes. Nuestra empresa joven y dinámica se compromete a brindar un servicio confiable, seguro y personalizado, respaldado por años de experiencia en la industria.</p>
 
 			<p><strong>Recolección y Entrega Personalizada</strong>
@@ -27,7 +28,7 @@
 
 			<p> Contactenos para obtener más información sobre cómo podemos ayudarlo con sus necesidades de envío y logística. En GLP, estamos aquí para simplificar sus operaciones y hacer que sus envíos sean más eficientes que nunca.</p>
 
-
+			</span>
 
      	<h4>NUESTROS SERVICIOS</h4>
 			<ul class="custom-list-style" style="text-align: left; list-style-type: disc;">
