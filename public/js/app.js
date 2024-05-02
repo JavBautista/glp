@@ -2439,18 +2439,23 @@ __webpack_require__.r(__webpack_exports__);
   props: ['shipment_id'],
   data: function data() {
     return {
-      image: '',
+      image: null,
       status: '',
       trk: '',
       entrega: 0,
       txt_btn: '',
       accion: '',
       comentary: '',
+      name_receiver: '',
       error: 0,
       error_msg: ''
     };
   },
   methods: {
+    uploadImage: function uploadImage(event) {
+      this.image = event.target.files[0];
+      console.log(this.image);
+    },
     onImageChange: function onImageChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -2464,14 +2469,11 @@ __webpack_require__.r(__webpack_exports__);
       };
       reader.readAsDataURL(file);
     },
-    uploadImage: function uploadImage() {
-      axios.post('/collector/image/store', {
-        image: this.image,
-        id: this.shipment_id
-      }).then(function (response) {
-        console.log(response);
-      });
-    },
+    /*uploadImage(){
+        axios.post('/collector/image/store',{image: this.image, id:this.shipment_id}).then(response => {
+           console.log(response);
+        });
+    },*/
     loadShipment: function loadShipment() {
       var me = this;
       var url = '/collector/get-shipment/' + me.shipment_id;
@@ -2490,16 +2492,57 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateShipment: function updateShipment(btn_action) {
       var me = this;
-      if (btn_action == 'intento') me.accion = 'intento';else if (btn_action == 'entrega') me.accion = 'entregada';
-      axios.put('/collector/update-status-shipment', {
-        'shipment_id': me.shipment_id,
-        'accion': me.accion,
-        'comentary': me.comentary,
-        'image': me.image
-      }).then(function (response) {
+      var formData = new FormData();
+      console.log('me.shipment_id:');
+      console.log(me.shipment_id);
+      console.log(me.accion);
+      console.log(me.comentary);
+      console.log(me.name_receiver);
+      formData.append('shipment_id', me.shipment_id);
+      formData.append('accion', btn_action);
+      formData.append('comentary', me.comentary);
+      formData.append('name_receiver', me.name_receiver);
+      var image = this.image;
+      if (image != null) {
+        var imageType = image.type;
+        if (imageType.indexOf('image/') === -1) {
+          Swal.fire({
+            title: 'Error',
+            text: 'El archivo seleccionado no es una imagen',
+            icon: 'error'
+          });
+          return;
+        } //if imageType
+      } //if null
+      formData.append('image', this.image);
+      Swal.fire({
+        title: 'Cargando...',
+        onBeforeOpen: function onBeforeOpen() {
+          Swal.showLoading();
+        },
+        allowOutsideClick: false
+      });
+      console.log('formData:');
+      formData.forEach(function (value, key) {
+        console.log(key, value);
+      });
+      axios.post('/collector/update-status-shipment', formData).then(function (response) {
+        console.log(response);
+        Swal.close();
+        Swal.fire({
+          title: 'Exitoso',
+          text: 'El video ha sido guardado exitosamente',
+          icon: 'success'
+        });
         window.location.href = '/collector';
       })["catch"](function (error) {
         console.log(error);
+        Swal.close();
+        Swal.fire({
+          title: 'Error',
+          text: 'Ha ocurrido un error al guardar el video',
+          icon: 'error'
+        });
       });
     }
   },
@@ -5299,13 +5342,52 @@ var render = function render() {
     domProps: {
       textContent: _vm._s(_vm.error_msg)
     }
-  })])]) : _c("div", [_vm.entrega ? _c("div", [_c("div", {
+  })])]) : _c("div", [_vm.entrega ? _c("div", [_c("form", {
+    staticClass: "form-horizontal",
+    attrs: {
+      action: "",
+      method: "post",
+      enctype: "multipart/form-data"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "name_receiver"
+    }
+  }, [_vm._v("Nombre de quien Rrecibe:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name_receiver,
+      expression: "name_receiver"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      rows: "3"
+    },
+    domProps: {
+      value: _vm.name_receiver
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name_receiver = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
       "for": "comentary"
     }
-  }, [_vm._v("Comentario")]), _vm._v(" "), _c("textarea", {
+  }, [_vm._v("Comentario:")]), _vm._v(" "), _c("textarea", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5331,13 +5413,14 @@ var render = function render() {
     attrs: {
       "for": "image"
     }
-  }, [_vm._v("Agregar imagen")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Agregar imagen:")]), _vm._v(" "), _c("input", {
     staticClass: "form-control",
     attrs: {
-      type: "file"
+      type: "file",
+      name: "logo"
     },
     on: {
-      change: _vm.onImageChange
+      change: _vm.uploadImage
     }
   })]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("button", {
     staticClass: "btn btn-outline-primary",
@@ -5363,7 +5446,7 @@ var render = function render() {
     }
   }, [_c("li", {
     staticClass: "fa fa-paper-plane"
-  }), _vm._v(" Entregada")])]) : _c("div", [_c("button", {
+  }), _vm._v(" Entregada")])])]) : _c("div", [_c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "button"
@@ -6529,7 +6612,7 @@ var render = function render() {
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-md-10"
+    staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
@@ -7050,10 +7133,8 @@ var render = function render() {
         _vm.remitent_declared_value = $event.target.value;
       }
     }
-  })])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-10"
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {

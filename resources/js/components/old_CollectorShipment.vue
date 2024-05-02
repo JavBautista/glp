@@ -13,26 +13,23 @@
         </div>
         <div v-else>
             <div v-if="entrega">
-              <form v-on:submit.prevent action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                <div class="form-group">
-                  <label for="name_receiver">Nombre de quien Rrecibe:</label>
-                  <input type='text' class="form-control" v-model="name_receiver" rows="3"></input>
-                </div>
+              <div class="form-group">
+                <label for="name_receiver">Nombre de quien Rrecibe:</label>
+                <input type='text' class="form-control" v-model="name_receiver" rows="3"></input>
+              </div>
 
-                <div class="form-group">
-                  <label for="comentary">Comentario:</label>
-                  <textarea class="form-control" v-model="comentary" rows="3"></textarea>
-                </div>
+              <div class="form-group">
+                <label for="comentary">Comentario:</label>
+                <textarea class="form-control" v-model="comentary" rows="3"></textarea>
+              </div>
 
-                <div class="form-group">
-                  <label for="image">Agregar imagen:</label>
-                  <!--<input type="file" v-on:change="onImageChange" class="form-control">-->
-                  <input class="form-control"  type="file" name="logo" @change="uploadImage">
-                </div>
-                <hr>
-                <button type="button" class="btn btn-outline-primary" @click="updateShipment('intento')"> <li class="fa fa-clock"></li> Intento de entrega</button>
-                <button type="button" class="btn btn-primary" @click="updateShipment('entrega')"> <li class="fa fa-paper-plane"></li> Entregada</button>
-              </form>
+              <div class="form-group">
+                <label for="image">Agregar imagen:</label>
+                <input type="file" v-on:change="onImageChange" class="form-control">
+              </div>
+              <hr>
+              <button type="button" class="btn btn-outline-primary" @click="updateShipment('intento')"> <li class="fa fa-clock"></li> Intento de entrega</button>
+              <button type="button" class="btn btn-primary" @click="updateShipment('entrega')"> <li class="fa fa-paper-plane"></li> Entregada</button>
             </div>
             <div v-else>
               <button type="button" class="btn btn-primary" @click="updateShipment('otro')"> <li class="fa fa-paper-plane"></li> {{txt_btn}}</button>
@@ -65,7 +62,7 @@
         props:['shipment_id'],
         data(){
             return {
-                image:null,
+                image:'',
                 status:'',
                 trk:'',
                 entrega:0,
@@ -78,11 +75,6 @@
             }
         },
         methods:{
-          uploadImage(event) {
-                this.image = event.target.files[0];
-                console.log(this.image)
-          },
-
           onImageChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
@@ -97,12 +89,11 @@
                 };
                 reader.readAsDataURL(file);
             },
-
-            /*uploadImage(){
+            uploadImage(){
                 axios.post('/collector/image/store',{image: this.image, id:this.shipment_id}).then(response => {
                    console.log(response);
                 });
-            },*/
+            },
 
             loadShipment(){
               let me=this;
@@ -121,71 +112,22 @@
                     console.log(error);
                 });
             },
-
             updateShipment(btn_action){
               let me = this;
-              const formData = new FormData();
-
-              console.log('me.shipment_id:');
-              console.log(me.shipment_id);
-              console.log(me.accion);
-              console.log(me.comentary);
-              console.log(me.name_receiver);
-
-              formData.append('shipment_id', me.shipment_id);
-              formData.append('accion', btn_action);
-              formData.append('comentary', me.comentary);
-              formData.append('name_receiver', me.name_receiver);
-
-              let image = this.image;
-              if(image!=null){
-                let imageType = image.type;
-                if(imageType.indexOf('image/') === -1){
-                    Swal.fire({
-                      title: 'Error',
-                      text: 'El archivo seleccionado no es una imagen',
-                      icon: 'error',
-                    });
-                    return;
-                }//if imageType
-              }//if null
-              formData.append('image', this.image);
-
-
-              Swal.fire({
-                  title: 'Cargando...',
-                  onBeforeOpen: () => {
-                    Swal.showLoading()
-                  },
-                  allowOutsideClick: false,
-              });
-
-              console.log('formData:');
-              formData.forEach((value, key) => {
-                  console.log(key, value);
-              });
-
-              axios.post('/collector/update-status-shipment',formData)
-              .then(function (response) {
-                  console.log(response);
-                  Swal.close();
-                  Swal.fire({
-                        title: 'Exitoso',
-                        text: 'El video ha sido guardado exitosamente',
-                        icon: 'success',
-                    });
+              if (btn_action=='intento') me.accion = 'intento'
+              else if(btn_action=='entrega') me.accion = 'entregada'
+              axios.put('/collector/update-status-shipment',{
+                  'shipment_id': me.shipment_id,
+                  'accion': me.accion,
+                  'comentary': me.comentary,
+                  'name_receiver': me.name_receiver,
+                  'image': me.image,
+              }).then(function (response) {
                   window.location.href = '/collector';
               }).catch(function (error) {
                   console.log(error);
-                  Swal.close();
-                  Swal.fire({
-                      title: 'Error',
-                      text: 'Ha ocurrido un error al guardar el video',
-                      icon: 'error',
-                    });
               });
             }
-
         },
         mounted() {
             this.loadShipment()

@@ -70,13 +70,19 @@ class DashboardCollectorController extends Controller
     }
 
     public function updateStatusShipment(Request $request){
+
+
+
         if(!$request->ajax()){
             Session::flash('alert', 'Acceso no autorizado.');
             Session::flash('alert-class', 'alert-info');
             return redirect('/collector');
         }
+
+
         $status = 0;
         $comentary='';
+        $name_receiver='';
         $user = $request->user();
         if($request->accion=='recolectada') $status= 2;
         if($request->accion=='plaza') $status= 3;
@@ -84,11 +90,15 @@ class DashboardCollectorController extends Controller
         if($request->accion=='intento') $status= 5;
         if($request->accion=='entregada') $status= 6;
         if($status){
-            if($status==5 || $status==6) $comentary = $request->comentary;
+            if($status==5 || $status==6){
+                $comentary = $request->comentary;
+                $name_receiver = $request->input('name_receiver','');
+            }
 
             $shipment = Shipment::find($request->shipment_id);
             $shipment->status_id = $status;
             $shipment->save();
+
 
             $shipment_history =ShipmentHistory::create([
                 'shipment_id'=>$shipment->id,
@@ -96,15 +106,13 @@ class DashboardCollectorController extends Controller
                 'description'=>'Actualización de status de envio: '.$shipment->status->status,
                 'creator_name'=>$user->name,
                 'comentary'=>$comentary,
+                'name_receiver'=>$name_receiver,
             ]);
 
             if($status==5 || $status==6){
-                if($request->get('image')){
-                  $image = $request->get('image');
-                  $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                  \Image::make($request->get('image'))->save(public_path('images/shipments/').$name);
-                  $shipment_history->image = $name;
-                  $shipment_history->save();
+                if ($request->hasFile('image')) {
+                    $shipment_history->image = $request->file('image')->store('shipments', 'public');
+                    $shipment_history->save();
                 }
             }
             Session::forget('trk');

@@ -145,6 +145,7 @@
                   <td>{{strtoupper($history->status)}}</td>
                   <td>{{$history->description}}</td>
                   <td>{{$history->comentary}}</td>
+                  <td>{{($history->name_receiver!='')?'Recibe: '.$history->name_receiver:''}}</td>
                   <td>
                   	@if($history->image!=NULL)
                   		<a href="/storage/{{$history->image}}" target="_blank" class="btn btn-info"><span class="fa fa-image"></span></a>

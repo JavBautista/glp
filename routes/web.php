@@ -191,7 +191,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/collector/get-shipment/{id}', 'DashboardCollectorController@getShipment');
 
-        Route::put('/collector/update-status-shipment', 'DashboardCollectorController@updateStatusShipment');
+        Route::post('/collector/update-status-shipment', 'DashboardCollectorController@updateStatusShipment');
 
         //Route::post('/collector/image/store', 'DashboardCollectorController@storeImage');
     });

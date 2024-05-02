@@ -13,7 +13,7 @@
       </div>
     </div>
      <div class="row">
-         <div class="col-md-10">
+         <div class="col-md-6">
             <div class="card">
               <div class="card-header bg-dark text-white">Remitente</div>
               <div class="card-body">
@@ -164,12 +164,8 @@
                   </div>
               </div>
             </div>
-         </div><!--.col-10-->
-
-     </div><!--.row-->
-     <div class="row">
-
-         <div class="col-md-10">
+         </div><!--.col-6-->
+         <div class="col-md-6">
             <div class="card">
               <div class="card-header bg-dark text-white">Destinatario</div>
               <div class="card-body">
@@ -291,7 +287,7 @@
 
               </div>
             </div>
-         </div><!--.col-10-->
+         </div><!--.col-6-->
      </div><!--.row-->
      <div class="container">
       <div class="card">
