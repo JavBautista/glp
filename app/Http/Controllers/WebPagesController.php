@@ -9,7 +9,13 @@ use App\Shipment;
 use App\Customer;
 use App\ShipmentHistory;
 use App\ShipmentStatus;
+use App\ContactsForm;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+
+use App\Mail\ContactFormMail;
+
 
 class WebPagesController extends Controller
 {
@@ -112,6 +118,32 @@ class WebPagesController extends Controller
     }
 
 
+    public function storeContactForm(Request $request){
+    	$request->validate([
+		    'name' => 'required|string|max:255',
+		    'email' => 'required|string|email|max:255',
+		    'phone' => 'required|string|max:15',
+		    'message' => 'required|string|max:1000', // Por ejemplo, establecemos un límite de 1000 caracteres para el mensaje
+		], [
+		    // Mensajes de error personalizados
+		    'name.required' => 'El nombre es obligatorio.',
+		    'email.required' => 'El correo electrónico es obligatorio.',
+		    'email.email' => 'El correo electrónico debe ser una dirección de correo válida.',
+		    'phone.required' => 'El teléfono es obligatorio.',
+		    'message.required' => 'El mensaje es obligatorio.',
+		    'message.max' => 'El mensaje no puede exceder los 1000 caracteres.', // Mensaje de error personalizado para el límite máximo de caracteres
+		]);
 
+		$contact = ContactsForm::create([
+			'name'=>$request->name,
+			'email'=>$request->email,
+			'phone'=>$request->phone,
+			'message'=>$request->message,
+		]);
+
+		Mail::to($contact->email)->send(new ContactFormMail($contact));
+
+        return redirect()->back()->with('success', '¡Gracias! Nos pondremos en contacto.');
+    }
 
 }

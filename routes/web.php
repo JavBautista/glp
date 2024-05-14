@@ -26,6 +26,8 @@ Route::get('/about', 'WebPagesController@about')->name('web.about');
 Route::get('/services', 'WebPagesController@services')->name('web.services');
 Route::get('/contact', 'WebPagesController@contact')->name('web.contact');
 
+Route::post('/contact-form/create', 'WebPagesController@storeContactForm')->name('contact-form.store');
+
 Route::get('/privacidad', function(){
     return view('web.privacidad');
 });
