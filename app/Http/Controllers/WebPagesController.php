@@ -130,6 +130,7 @@ class WebPagesController extends Controller
 		    'email.required' => 'El correo electrónico es obligatorio.',
 		    'email.email' => 'El correo electrónico debe ser una dirección de correo válida.',
 		    'phone.required' => 'El teléfono es obligatorio.',
+		    'phone.max' => 'El teléfono no puede exceder los 15 carecteres.',
 		    'message.required' => 'El mensaje es obligatorio.',
 		    'message.max' => 'El mensaje no puede exceder los 1000 caracteres.', // Mensaje de error personalizado para el límite máximo de caracteres
 		]);
@@ -141,7 +142,7 @@ class WebPagesController extends Controller
 			'message'=>$request->message,
 		]);
 
-		Mail::to($contact->email)->send(new ContactFormMail($contact));
+		Mail::to('operaciones@glppaqueteria.com')->send(new ContactFormMail($contact));
 
         return redirect()->back()->with('success', '¡Gracias! Nos pondremos en contacto.');
     }

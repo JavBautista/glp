@@ -43,7 +43,7 @@
                 @enderror
               </div>
               <div>
-                <input name="phone" id="phone" type="text"  class="form-control @error('phone') is-invalid @enderror" placeholder="NÚMERO DE CONTACTANOS" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                <input name="phone" id="phone" type="text"  class="form-control @error('phone') is-invalid @enderror" placeholder="NÚMERO DE CONTACTO" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
                 @error('phone')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
