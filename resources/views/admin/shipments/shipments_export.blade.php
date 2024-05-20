@@ -4,6 +4,7 @@
         <th><strong>No.</strong></th>
         <th><strong>#Trk</strong></th>
         <th><strong>Creacion</strong></th>
+        <th><strong>Costo</strong></th>
 
         <th><strong>Estatus</strong></th>
         <th><strong>Fecha Estatus</strong></th>
@@ -37,6 +38,7 @@
             <td>{{ $shipment->id }}</td>
             <td>&nbsp;{{ $shipment->tracking_number }}</td>
             <td>{{ $shipment->created_at }}</td>
+            <td>{{ number_format($shipment->cost, 2, '.', '') }}</td>
 
             <td>{{ $shipment->status->status }}</td>
 
