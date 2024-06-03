@@ -2220,6 +2220,200 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      message_id: 0,
+      read: 1,
+      name: '',
+      message: '',
+      email: '',
+      phone: '',
+      created_at: '',
+      arrayMessages: [],
+      modal: 0,
+      tituloModal: '',
+      tipoAccion: 0,
+      error: 0,
+      errorMostrarMsj: [],
+      pagination: {
+        'total': 0,
+        'current_page': 0,
+        'per_page': 0,
+        'last_page': 0,
+        'from': 0,
+        'to': 0
+      },
+      offset: 3
+    };
+  },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    //Calcula los elementos de la paginacion
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+      var from = this.pagination.current_page - this.offset;
+      if (from < 1) {
+        from = 1;
+      }
+      var to = from + this.offset * 2;
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+      var pagesArray = [];
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+      return pagesArray;
+    }
+  },
+  methods: {
+    loadMessages: function loadMessages(page) {
+      var me = this;
+      var url = "/messages-form-contact/get?page=".concat(page);
+
+      // Make a request for a user with a given ID
+      axios.get(url).then(function (response) {
+        var respuesta = response.data;
+        me.arrayMessages = respuesta.messages.data;
+        me.pagination = respuesta.pagination;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      })["finally"](function () {
+        // always executed
+      });
+    },
+    cambiarPagina: function cambiarPagina(page) {
+      var me = this;
+      me.pagination.current_page = page;
+      me.loadMessages(page);
+    },
+    cerrarModal: function cerrarModal() {
+      this.modal = 0;
+      this.tituloModal = '';
+    },
+    marcarLeido: function marcarLeido(id) {
+      var _this = this;
+      console.log('marcar leido');
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: '¿Desea marcar como leido este mensaje?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          var me = _this;
+          axios.put('/messages-form-contact/update-read', {
+            'id': id
+          }).then(function (response) {
+            me.cerrarModal();
+            me.loadMessages(me.pagination.current_page);
+            swalWithBootstrapButtons.fire('Exito', '¡Actualización correcta!', 'success');
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    truncateMessage: function truncateMessage(message, maxLength) {
+      if (!message) {
+        return ''; // Si el mensaje es nulo, retornamos una cadena vacía
+      }
+
+      if (message.length > maxLength) {
+        return message.substring(0, maxLength) + '...'; // Truncamos el mensaje
+      } else {
+        return message;
+      }
+    },
+    eliminaMessage: function eliminaMessage(id) {
+      var _this2 = this;
+      console.log('eliminar msg');
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: '¿Desea eliminar este mensaje?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          var me = _this2;
+          axios.put('/messages-form-contact/delete', {
+            'id': id
+          }).then(function (response) {
+            me.cerrarModal();
+            me.loadMessages(me.pagination.current_page);
+            swalWithBootstrapButtons.fire('Exito', '¡Eliminación correcta!', 'success');
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    abrirModal: function abrirModal(modelo, accion) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+      switch (modelo) {
+        case "message":
+          {
+            switch (accion) {
+              case 'ver':
+                {
+                  this.modal = 1;
+                  this.tipoAccion = 1;
+                  this.tituloModal = 'Ver';
+                  this.message_id = data['id'];
+                  this.name = data['name'];
+                  this.read = data['read'];
+                  this.email = data['email'];
+                  this.phone = data['phone'];
+                  this.message = data['message'];
+                  this.created_at = data['created_at'];
+                  break;
+                }
+            }
+          }
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.loadMessages(1);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminShipmentsStatuses.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminShipmentsStatuses.vue?vue&type=script&lang=js& ***!
@@ -5018,6 +5212,244 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fa fa-align-justify"
   }), _vm._v(" Envios\n        ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "container"
+  }, _vm._l(_vm.arrayMessages, function (msg) {
+    return _c("div", {
+      key: msg.id,
+      staticClass: "card mb-4"
+    }, [_c("div", {
+      staticClass: "card-body"
+    }, [_c("p", {
+      staticClass: "card-text"
+    }, [msg.read ? [_c("strong", [_vm._v("Estatus: ")]), _c("span", {
+      staticClass: "badge bg-success"
+    }, [_vm._v("Leído")])] : [_c("strong", [_vm._v("Estatus: ")]), _c("span", {
+      staticClass: "badge bg-danger"
+    }, [_vm._v("Sin Leer")])]], 2), _vm._v(" "), _c("h5", {
+      staticClass: "card-title"
+    }, [_vm._v(_vm._s(msg.name))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text preview-message"
+    }, [_vm._v(_vm._s(_vm.truncateMessage(msg.message, 100)))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text text-muted float-right"
+    }, [_vm._v(_vm._s(msg.created_at))]), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-danger",
+      on: {
+        click: function click($event) {
+          return _vm.eliminaMessage(msg.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-trash"
+    }), _vm._v(" Eliminar\n                    ")]), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-primary",
+      on: {
+        click: function click($event) {
+          return _vm.abrirModal("message", "ver", msg);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-envelope-o"
+    }), _vm._v(" Ver\n                    ")])])]);
+  }), 0), _vm._v(" "), _c("nav", [_c("ul", {
+    staticClass: "pagination"
+  }, [_vm.pagination.current_page > 1 ? _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.cambiarPagina(_vm.pagination.current_page - 1);
+      }
+    }
+  }, [_vm._v("Ant")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.pagesNumber, function (page) {
+    return _c("li", {
+      key: page,
+      staticClass: "page-item",
+      "class": [page == _vm.isActived ? "active" : ""]
+    }, [_c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#"
+      },
+      domProps: {
+        textContent: _vm._s(page)
+      },
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.cambiarPagina(page);
+        }
+      }
+    })]);
+  }), _vm._v(" "), _vm.pagination.current_page < _vm.pagination.last_page ? _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.cambiarPagina(_vm.pagination.current_page + 1);
+      }
+    }
+  }, [_vm._v("Sig")])]) : _vm._e()], 2)])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      mostrar: _vm.modal
+    },
+    staticStyle: {
+      display: "none"
+    },
+    attrs: {
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "myModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-primary modal-lg",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h4", {
+    staticClass: "modal-title",
+    domProps: {
+      textContent: _vm._s(_vm.tituloModal)
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "aria-label": "Close"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.cerrarModal();
+      }
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("form", {
+    staticClass: "form-horizontal",
+    attrs: {
+      action: "",
+      method: "post",
+      enctype: "multipart/form-data"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 form-control-label"
+  }, [_vm._v("Nombre")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("p", {
+    domProps: {
+      textContent: _vm._s(_vm.name)
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 form-control-label"
+  }, [_vm._v("Mensaje")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("pre", [_c("p", [_vm._v(_vm._s(_vm.message))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 form-control-label"
+  }, [_vm._v("Email")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("pre", [_c("p", [_vm._v(_vm._s(_vm.email))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 form-control-label"
+  }, [_vm._v("Teléfono")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("pre", [_c("p", [_vm._v(_vm._s(_vm.phone))])])])]), _vm._v(" "), _c("p", {
+    staticClass: "float-right text-muted"
+  }, [_c("em", [_c("span", {
+    domProps: {
+      textContent: _vm._s(_vm.created_at)
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.cerrarModal();
+      }
+    }
+  }, [_vm._v("Cerrar")]), _vm._v(" "), _vm.read == 0 ? _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.marcarLeido(_vm.message_id);
+      }
+    }
+  }, [_vm._v("Marcar Leido")]) : _vm._e()])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("i", {
+    staticClass: "fa fa-align-justify"
+  }), _vm._v(" Mensajes de Formulario de Contacto\n          ")]);
 }];
 render._withStripped = true;
 
@@ -13200,6 +13632,25 @@ render._withStripped = true;
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminCollectors.vue?vue&type=style&index=0&id=0dee0fcc&lang=css& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: fixed !important;\n    background-color: #3c29297a !important;\n    overflow: scroll;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66090,6 +66541,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminShipmentsStatuses.vue?vue&type=style&index=0&id=91a58616&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminShipmentsStatuses.vue?vue&type=style&index=0&id=91a58616&lang=css& ***!
@@ -81255,6 +81736,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('admin-collectors', __webpack_require__(/*! ./components/AdminCollectors.vue */ "./resources/js/components/AdminCollectors.vue")["default"]);
 Vue.component('admin-envios', __webpack_require__(/*! ./components/AdminEnvios.vue */ "./resources/js/components/AdminEnvios.vue")["default"]);
+Vue.component('admin-messages-form-contact', __webpack_require__(/*! ./components/AdminMessagesFormContact.vue */ "./resources/js/components/AdminMessagesFormContact.vue")["default"]);
 Vue.component('admin-shipments-statuses', __webpack_require__(/*! ./components/AdminShipmentsStatuses.vue */ "./resources/js/components/AdminShipmentsStatuses.vue")["default"]);
 Vue.component('collector-shipment', __webpack_require__(/*! ./components/CollectorShipment.vue */ "./resources/js/components/CollectorShipment.vue")["default"]);
 Vue.component('customer-envios-clientes', __webpack_require__(/*! ./components/CustomerEnviosClientes.vue */ "./resources/js/components/CustomerEnviosClientes.vue")["default"]);
@@ -81487,6 +81969,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEnvios_vue_vue_type_template_id_72c1e0d8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEnvios_vue_vue_type_template_id_72c1e0d8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminMessagesFormContact.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/AdminMessagesFormContact.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminMessagesFormContact.vue?vue&type=template&id=981c4628& */ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628&");
+/* harmony import */ var _AdminMessagesFormContact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminMessagesFormContact.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& */ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _AdminMessagesFormContact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminMessagesFormContact.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminMessagesFormContact.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=style&index=0&id=981c4628&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_style_index_0_id_981c4628_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminMessagesFormContact.vue?vue&type=template&id=981c4628& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminMessagesFormContact.vue?vue&type=template&id=981c4628&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminMessagesFormContact_vue_vue_type_template_id_981c4628___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

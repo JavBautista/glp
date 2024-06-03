@@ -132,6 +132,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/admmin/shipments_status/update-inactive', 'ShipmentStatusesController@desactivar');
         Route::put('/admmin/shipments_status/delete', 'ShipmentStatusesController@delete');
 
+
+        //MESSAGES FORM CONTACT
+        Route::get('/admin/messages-web', 'DashboardAdminController@messagesWebIndex');
+        Route::get('/messages-form-contact/get', 'ContactsFormController@get');
+        Route::put('/messages-form-contact/update-read', 'ContactsFormController@updateRead');
+        Route::put('/messages-form-contact/delete', 'ContactsFormController@delete');
     });
     /*
     |--------------------------------------------------------------------------

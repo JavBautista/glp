@@ -233,4 +233,8 @@ class DashboardAdminController extends Controller
     public function shipmentsStatusIndex(){
         return view('admin.shipments_statuses.index');
     }
+
+    public function messagesWebIndex(){
+        return view('admin.messages_web.index');
+    }
 }

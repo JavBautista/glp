@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('admin-collectors', require('./components/AdminCollectors.vue').default);
 Vue.component('admin-envios', require('./components/AdminEnvios.vue').default);
+Vue.component('admin-messages-form-contact', require('./components/AdminMessagesFormContact.vue').default);
 Vue.component('admin-shipments-statuses', require('./components/AdminShipmentsStatuses.vue').default);
 Vue.component('collector-shipment', require('./components/CollectorShipment.vue').default);
 Vue.component('customer-envios-clientes', require('./components/CustomerEnviosClientes.vue').default);
