@@ -52,8 +52,8 @@ Route::get('/tracking-number/search', 'WebPagesController@searchTrackingNumber')
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/user/passwords/reset', 'HomeController@passwordReset')->name('password.reset');
-    Route::post('/user/passwords/update', 'HomeController@updatePassword')->name('password.update');
+    Route::get('/user/passwords/reset', 'HomeController@passwordReset')->name('custom.password.reset');
+    Route::post('/user/passwords/update', 'HomeController@updatePassword')->name('custom.password.update');
 
 
     Route::get('/estados/get', 'CommonsController@getEstados');
@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/admin/collectors/update-baja', 'CollectorsController@updatBaja');
         Route::put('/admin/collectors/update/active', 'CollectorsController@updateActive');
         Route::put('/admin/collectors/update/inactive', 'CollectorsController@updateInactive');
+        Route::put('/admin/collectors/update-password', 'CollectorsController@updatePassword');
 
         Route::get('/admin/collectors/detail/{id}', 'DashboardAdminController@collectorDetail')->name('collector.detail');
 

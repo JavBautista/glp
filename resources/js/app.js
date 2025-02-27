@@ -4,30 +4,39 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import { createApp } from 'vue';
+import dayjs from 'dayjs';
 require('./bootstrap');
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
-window.Vue = require('vue');
+// Importar los componentes manualmente
+import AdminCollectors from './components/AdminCollectors.vue';
+import AdminEnvios from './components/AdminEnvios.vue';
+import AdminMessagesFormContact from './components/AdminMessagesFormContact.vue';
+import AdminShipmentsStatuses from './components/AdminShipmentsStatuses.vue';
+import CollectorShipment from './components/CollectorShipment.vue';
+import CustomerEnviosClientes from './components/CustomerEnviosClientes.vue';
+import CustomerDirecotorioClientes from './components/CustomerDirecotorioClientes.vue';
+import CustomerShipmentCreate from './components/CustomerShipmentCreate.vue';
+import TestFecha from './components/TestFecha.vue';
+import Envios from './components/Envios.vue';
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+const app = createApp({});
 
-Vue.component('admin-collectors', require('./components/AdminCollectors.vue').default);
-Vue.component('admin-envios', require('./components/AdminEnvios.vue').default);
-Vue.component('admin-messages-form-contact', require('./components/AdminMessagesFormContact.vue').default);
-Vue.component('admin-shipments-statuses', require('./components/AdminShipmentsStatuses.vue').default);
-Vue.component('collector-shipment', require('./components/CollectorShipment.vue').default);
-Vue.component('customer-envios-clientes', require('./components/CustomerEnviosClientes.vue').default);
-Vue.component('customer-directorio-clientes', require('./components/CustomerDirecotorioClientes.vue').default);
-Vue.component('customer-shipment-create', require('./components/CustomerShipmentCreate.vue').default);
-Vue.component('envios', require('./components/Envios.vue').default);
+// Registrar los componentes globalmente
+
+app.component('admin-collectors', AdminCollectors);
+app.component('admin-envios', AdminEnvios);
+app.component('admin-messages-form-contact', AdminMessagesFormContact);
+app.component('admin-shipments-statuses', AdminShipmentsStatuses);
+app.component('collector-shipment', CollectorShipment);
+app.component('customer-envios-clientes', CustomerEnviosClientes);
+app.component('customer-directorio-clientes', CustomerDirecotorioClientes);
+app.component('customer-shipment-create', CustomerShipmentCreate);
+app.component('test-fecha', TestFecha);
+app.component('envios', Envios);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,6 +44,5 @@ Vue.component('envios', require('./components/Envios.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
+// Montar la aplicación en el `#app`
+app.mount('#app');

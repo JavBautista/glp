@@ -30,71 +30,42 @@
 <div id="app">
     <header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-            <a class="" href="/">GLP</a>
+        <a class="" href="/">GLP</a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="nav navbar-nav d-md-down-none">
-            <!--
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Escritorio</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Configuraciones</a>
-            </li>
-        -->
-        </ul>
-        <ul class="nav navbar-nav ml-auto">
-<!--
-            <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#" data-toggle="dropdown">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-pill badge-danger">5</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header text-center">
-                        <strong>Notificaciones</strong>
-                    </div>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-envelope-o"></i> Ingresos
-                        <span class="badge badge-success">3</span>
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-tasks"></i> Ventas
-                        <span class="badge badge-danger">2</span>
-                    </a>
-                </div>
-            </li>
-        -->
+    
+        <ul class="nav navbar-nav d-md-down-none"></ul>
+    
+        <ul class="nav navbar-nav ms-auto">  <!-- Bootstrap 5 usa ms-auto en lugar de ml-auto -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <!--
-                    <img src="{{ asset('img/avatars/6.jpg') }}" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    -->
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="fa fa-user img-avatar"></span>
-                    <span class="d-md-down-none">admin </span>
+                    <span class="d-md-down-none">admin</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header text-center">
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li class="dropdown-header text-center">
                         <strong>Cuenta</strong>
-                    </div>
-                    <a class="dropdown-item" href="{{ route('home') }}">Dahsboard</a>
-                    <a class="dropdown-item" href="{{ route('password.reset') }}">Reset Password</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('home') }}">Dashboard</a></li>
+                    <li><a class="dropdown-item" href="{{ route('custom.password.reset') }}">Reset Password</a></li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </header>
+    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+    
 
     <div class="app-body">
         @include('customer.sidebar')

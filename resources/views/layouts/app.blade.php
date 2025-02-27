@@ -55,7 +55,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('home') }}">Dahsboard</a>
-                                    <a class="dropdown-item" href="{{ route('password.reset') }}">Reset Password</a>
+                                    <a class="dropdown-item" href="{{ route('custom.password.reset') }}">Reset Password</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -34,9 +34,15 @@ class DashboardAdminController extends Controller
     }
 
     public function setSessionFechas(Request $request){
+       
         //Lo que llega a este metodo son dos textos en formato Y-m-d
         $request->session()->put('fecha_ini', $request->fecha_ini);
         $request->session()->put('fecha_fin', $request->fecha_fin);
+
+        return json_encode([
+            $request->session()->get('fecha_ini'),
+            $request->session()->get('fecha_fin')
+        ]);
     }
 
     public function getShipments(Request $request){

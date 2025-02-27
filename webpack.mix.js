@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const webpack = require('webpack'); // Agregar esta línea
 
 /*
  |--------------------------------------------------------------------------
@@ -26,6 +27,18 @@ mix.js('resources/js/app.js', 'public/js')
     'resources/coreui/js/Chart.min.js',
     'resources/coreui/js/template.js',
     'resources/coreui/js/sweetalert2.all.js'
-	],'public/js/coreui.js');
+	],'public/js/coreui.js')
+    .vue()
+    .sourceMaps();
 
-mix.browserSync('http://glp.local/');
+    mix.webpackConfig({
+        plugins: [
+            new webpack.DefinePlugin({
+                __VUE_OPTIONS_API__: true,
+                __VUE_PROD_DEVTOOLS__: false,
+                __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+            })
+        ]
+    });
+
+mix.browserSync('http://glp.test/');

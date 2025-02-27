@@ -64,7 +64,7 @@
                                   <dt class="col-4">Estatus</dt>
                                   <dd class="col-8" v-text="envio.status.status"></dd>
                                   <dt class="col-4">Creada</dt>
-                                  <dd class="col-8 small text-muted" v-text="envio.created_at"></dd>
+                                  <dd class="col-8 small text-muted">{{ formatFecha(envio.created_at) }}</dd>
                                 </dl>
                                 <p><a :href="'/customer/shipment/detail/'+envio.id" class="btn btn-block btn-dark"> <i class="fa fa-search"></i> Ver Detalle</a></p>
                                 <!--<p><a :href="'/customer/shipment/print/'+envio.id" class="btn btn-block btn-outline-danger"> <i class="fa fa-print"></i> Imprimir tradicional</a></p>-->
@@ -99,6 +99,7 @@
 </template>
 
 <script>
+    import moment from "moment";
     export default {
         data(){
             return {
@@ -144,6 +145,9 @@
            }
         },
         methods:{
+            formatFecha(fecha) {
+                return moment(fecha).format("DD/MM/YYYY HH:mm:ss");
+            },
             listarEnvios(page,buscar){
                 console.log('Listar Envios')
                 let me=this;

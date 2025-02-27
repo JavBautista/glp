@@ -9,10 +9,11 @@ use App\Destinatary;
 use App\CustomerClients;
 use PDF;
 use QrCode;
-use peal\barcodegenerator\Facades\BarCode;
+use BarCode; 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class DashboardCustomerController extends Controller
 {
@@ -119,6 +120,8 @@ class DashboardCustomerController extends Controller
                 'sizefactor' => 1,
                 'filename' => 'image1.jpeg'
             ];
+
+            
         $barcontent = BarCode::barcodeFactory()->renderBarcode(
                                     $text=$barcode["text"],
                                     $size=$barcode['size'],
@@ -150,7 +153,7 @@ class DashboardCustomerController extends Controller
                 'sizefactor' => 1,
                 'filename' => 'image1.jpeg'
             ];
-        $barcontent = BarCode::barcodeFactory()->renderBarcode(
+            $barcontent = BarCode::barcodeFactory()->renderBarcode(
                                     $text=$barcode["text"],
                                     $size=$barcode['size'],
                                     $orientation=$barcode['orientation'],
@@ -161,7 +164,8 @@ class DashboardCustomerController extends Controller
             )->filename($barcode['filename']);
 
         $base = url('/');
-        $token = str_random(32);
+        //$token = str_random(32);
+        $token = Str::random(32);
         $url = $base."/collector/trk/".$shipment->tracking_number;
         $codigoQR = QrCode::format('png')->size(150)->generate($url);
 
@@ -181,7 +185,7 @@ class DashboardCustomerController extends Controller
                 'sizefactor' => 1,
                 'filename' => 'image1.jpeg'
             ];
-        $barcontent = BarCode::barcodeFactory()->renderBarcode(
+            $barcontent = BarCode::barcodeFactory()->renderBarcode(
                                     $text=$barcode["text"],
                                     $size=$barcode['size'],
                                     $orientation=$barcode['orientation'],

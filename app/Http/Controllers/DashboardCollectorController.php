@@ -129,15 +129,11 @@ class DashboardCollectorController extends Controller
             'creator_name'=>'Javi',
             'comentary'=>'lorem ipsum facto',
         ]);
-        /*if($request->hasFile('image')){
-           $shipment_history->image = $request->file('image')->store('shipments', 'public');
-           $shipment_history->save();
-        }*/
+
         if($request->hasFile('image')){
             if($request->get('image')){
               $image = $request->get('image');
               $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-              //\Image::make($request->get('image'))->save(public_path('images/').$name);
               \Image::make($request->get('image'))->save(public_path('images/shipments/').$name);
             }
         }
