@@ -40,6 +40,9 @@
         <tr>
             <td class="td-header">
                 <img src="{{asset('webglp/images/GLP_logo_h_800x200.png')}}" width="30%"  alt="">
+                <br>
+                <h3>www.glppaqueteria.com</h3>
+                
             </td>
             <td rowspan="3" class="text-center">
                 <h1>#Guía</h1>
