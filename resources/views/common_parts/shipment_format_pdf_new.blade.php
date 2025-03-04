@@ -74,8 +74,11 @@
             </td>
             <td width="50%">
             	<h3>DESTINO</h3>
-				<p><strong>Recibe</strong>&nbsp;{{ (strlen($shipment->destinatary->name) > 153)?substr($shipment->destinatary->name,0,150).'...' : $shipment->destinatary->name}}</p>
-				<p><strong>Atención</strong>&nbsp;{{ $shipment->destinatary->department }}</p>
+				<p><strong>Empresa</strong>&nbsp;{{ (strlen($shipment->destinatary->company) > 153)?substr($shipment->destinatary->company,0,150).'...' : $shipment->destinatary->company}}</p>
+
+                <p><strong>Nombre</strong>&nbsp;{{ (strlen($shipment->destinatary->name) > 153)?substr($shipment->destinatary->name,0,150).'...' : $shipment->destinatary->name}}</p>
+
+				<!--<p><strong>Atención</strong>&nbsp;{{ $shipment->destinatary->department }}</p>-->
 				<p><strong>Contacto</strong>&nbsp;{{ $shipment->destinatary->phone }} {{ $shipment->destinatary->movil }}</p>
 
 				<p><strong>Dirección</strong>&nbsp;{{ $shipment->destinatary->address }} {{ $shipment->destinatary->number_out }} {{ $shipment->destinatary->number_int }} &nbsp; <strong>Col.</strong>&nbsp;{{ $shipment->destinatary->district }}</p>
@@ -120,6 +123,8 @@
         <tr>
             <td class="td-header">
                 <img src="{{asset('webglp/images/GLP_logo_h_800x200.png')}}" width="30%"  alt="">
+                <br>
+                <h3>www.glppaqueteria.com</h3>
             </td>
             <td rowspan="3" class="text-center">
                 <h1>#Guía</h1>
@@ -151,8 +156,10 @@
             </td>
             <td width="50%">
                 <h3>DESTINO</h3>
-                <p><strong>Recibe</strong>&nbsp;{{ (strlen($shipment->destinatary->name) > 153)?substr($shipment->destinatary->name,0,150).'...' : $shipment->destinatary->name}}</p>
-                <p><strong>Atención</strong>&nbsp;{{ $shipment->destinatary->department }}</p>
+                <p><strong>Empresa</strong>&nbsp;{{ (strlen($shipment->destinatary->company) > 153)?substr($shipment->destinatary->company,0,150).'...' : $shipment->destinatary->company}}</p>
+
+                <p><strong>Nombre</strong>&nbsp;{{ (strlen($shipment->destinatary->name) > 153)?substr($shipment->destinatary->name,0,150).'...' : $shipment->destinatary->name}}</p>
+
                 <p><strong>Contacto</strong>&nbsp;{{ $shipment->destinatary->phone }} {{ $shipment->destinatary->movil }}</p>
 
                 <p><strong>Dirección</strong>&nbsp;{{ $shipment->destinatary->address }} {{ $shipment->destinatary->number_out }} {{ $shipment->destinatary->number_int }} &nbsp; <strong>Col.</strong>&nbsp;{{ $shipment->destinatary->district }}</p>
